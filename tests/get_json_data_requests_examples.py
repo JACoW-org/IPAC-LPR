@@ -4,11 +4,12 @@
 import requests
 import json
 
+api_token = "xxx"
+event_id = 41
+
 
 #Trying to reset a contribution's judgement
 if 1==1:
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     #payload = {'action': 'to_be_corrected' ,  'comment': 'Paper to be corrected, see separate email.'}
     #payload = {"judgment": "To be corrected", "comment":"Paper to be corrected, see separate email", "action": "to_be_corrected"}
@@ -24,8 +25,6 @@ if 1==1:
 
 #Trying to judge a contribution
 if 1==0:
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     payload = {'action': 'to_be_corrected' ,  'comment': 'Paper to be corrected, see separate email.'}
     #payload = {"judgment": "To be corrected", "comment":"Paper to be corrected, see separate email", "action": "to_be_corrected"}
@@ -41,8 +40,6 @@ if 1==0:
 
 #Reads a contribution based on its ID
 if 1==0:
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     payload = {'contribution_id': [1881]}
     data = requests.post(f'https://indico.jacow.org/event/{event_id}/manage/papers/assignment-list/export-json', headers=headers, data=payload).json()
@@ -62,8 +59,6 @@ if 1==0:
 
 #Reads a contribution based on its ID
 if 1==0:
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     payload = {'contribution_id': [ 1660 ]}
     data = requests.post(f'https://indico.jacow.org/event/{event_id}/manage/papers/assignment-list/export-json', headers=headers, data=payload).json()
@@ -73,8 +68,6 @@ if 1==0:
 
 #Reads a contribution based on its ID
 if 1==0:
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     payload = {'contribution_id': [ 1660 ]}
     data = requests.post(f'https://indico.jacow.org/event/{event_id}/manage/papers/export-json', headers=headers, data=payload)
@@ -84,8 +77,6 @@ if 1==0:
 
 #Returns a web page not working?
 if 1==0:
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     payload = {'contribution_id': [1660]}
     data = requests.post(f'https://indico.jacow.org/event/{event_id}/contributions/', headers=headers, data=payload)
@@ -93,8 +84,6 @@ if 1==0:
 
 #trying to get the contribution rating... 
 if 1==0:
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
     #payload = {'contribution_id': [1660]}
     data = requests.get(f'https://indico.jacow.org/event/41/papers/1537/', headers=headers)
@@ -104,8 +93,6 @@ if 1==0:
 
 #Gets a user id from its email address
 if 1==0:
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     data = requests.get(f'https://indico.jacow.org/user/search/?email=delerue@lal.in2p3.fr&favorites_first=true', headers=headers)
     print(data.text)
@@ -113,8 +100,6 @@ if 1==0:
 
 #Get info about a paper
 if 1==0:
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     payload = {'contribution_id': [1660]}
     data = requests.post(f'https://indico.jacow.org/event/41/manage/papers/assignment-list/export-json', headers=headers, data=payload)

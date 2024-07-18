@@ -16,7 +16,7 @@ import urllib.parse
 
 #Settings
 event_url="https://indico.jacow.org/event/41/"
-api_token = "PJ6R1s46EJjU2iqpYAj9oFH0xD"
+api_token = "xxx"
 event_id = 41
 
 

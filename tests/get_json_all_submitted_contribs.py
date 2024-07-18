@@ -5,7 +5,7 @@ import requests
 import json
 
 
-api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
+api_token = "xxx"
 event_id = 41
 headers = {'Authorization': f'Bearer {api_token}'}
 data = requests.get(f'https://indico.jacow.org/export/event/41.json?detail=contributions&pretty=yes', headers=headers)

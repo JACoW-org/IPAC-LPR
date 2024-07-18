@@ -6,7 +6,7 @@
 import requests
 import json
 
-api_token = "R1s46EJjU2iqpYAj9oFH0xD"
+api_token = "xxx"
 
 #Trying to judge a contribution
 if 1==1:

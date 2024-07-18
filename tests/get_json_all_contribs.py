@@ -5,7 +5,7 @@ import requests
 import json
 
 
-api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
+api_token = "xxx"
 event_id = 41
 headers = {'Authorization': f'Bearer {api_token}'}
 #payload = {'contribution_id': [1660]}

@@ -6,9 +6,10 @@
 import requests
 import json
 
+api_token = "R1s46EJjU2iqpYAj9oFH0xD"
+
 #Trying to judge a contribution
 if 1==1:
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
     event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     payload = {'action': 'accept' ,  'comment': 'Accepted for test'}
@@ -18,7 +19,6 @@ if 1==1:
     print(data)
 
 if 1==1:
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
     event_id = 37
     headers = {'Authorization': f'Bearer {api_token}'}
 
@@ -27,7 +27,6 @@ if 1==1:
     print(data.status_code)
 exit()
 
-api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
 event_id = 37
 headers = {'Authorization': f'Bearer {api_token}'}
 payload = {'contribution_id': [149]}
@@ -36,7 +35,6 @@ payload = {'contribution_id': [149]}
 #print(data)
 
 
-api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
 event_id = 37
 headers = {'Authorization': f'Bearer {api_token}'}
 payload = {'contribution_id': [149]}
@@ -44,7 +42,6 @@ payload = {'contribution_id': [149]}
 
 #print(data.text)
 
-api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
 event_id = 37
 headers = {'Authorization': f'Bearer {api_token}'}
 payload = {'contribution_id': [149]}

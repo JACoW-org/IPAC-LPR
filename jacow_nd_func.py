@@ -16,6 +16,8 @@ import urllib.parse
 
 #Settings
 event_url="https://indico.jacow.org/event/41/"
+api_token = "PJ6R1s46EJjU2iqpYAj9oFH0xD"
+event_id = 41
 
 
 #print("jacow_nd_func imported")
@@ -326,8 +328,6 @@ def get_referee_db_id_from_email(email):
         exit()
           
 def get_referee_info_from_email(email):
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     data = requests.get(f'https://indico.jacow.org/user/search/?email='+email, headers=headers)
     #print(data)
@@ -336,8 +336,6 @@ def get_referee_info_from_email(email):
 
 def assign_referee(paper_db_id,referee_db_id):
     print("assigning referee", referee_db_id, " to paper ", paper_db_id)
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     payload = {'contribution_id': [ paper_db_id ], 'user_id': [ referee_db_id ] }
     data = requests.post(f'{event_url}manage/papers/assignment-list/assign/content_reviewer', headers=headers, data=payload)
@@ -349,8 +347,6 @@ def unassign_referee(paper_id,referee_db_id):
     #print("db_id received by unassign_referee", referee_db_id)
     #print("db_id received by unassign_referee", type(referee_db_id))
     referee_db_id=str(referee_db_id)
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     payload = {'contribution_id': [ paper_id ], 'user_id': [ referee_db_id ] }
     data = requests.post(f'{event_url}manage/papers/assignment-list/unassign/content_reviewer', headers=headers, data=payload)
@@ -464,8 +460,6 @@ def assign_judge(paper_db_id,referee_db_id):
     else:
         list_referee_db_id=[referee_db_id]
     print("assigning judge", referee_db_id, " to paper ", paper_db_id)
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     payload = {'contribution_id': [ paper_db_id ], 'user_id': [ referee_db_id ] }
     data = requests.post(f'{event_url}manage/papers/assignment-list/assign/judge', headers=headers, data=payload,timeout=Requests_timeout)
@@ -487,8 +481,6 @@ def unassign_judge(paper_id,referee_db_id):
     else:
         list_referee_db_id=[referee_db_id]
     print("unassigning judge", referee_db_id, " to paper ", paper_id)
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     payload = {'contribution_id': [ paper_id ], 'user_id': [ referee_db_id ] }
     data = requests.post(f'{event_url}manage/papers/assignment-list/unassign/judge', headers=headers, data=payload,timeout=Requests_timeout)
@@ -972,8 +964,6 @@ def load_contribs():
         use_online=False
 
     if use_online:
-        api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-        event_id = 41
         headers = {'Authorization': f'Bearer {api_token}'}
         try:
             data = requests.get(f'https://indico.jacow.org/export/event/41.json?detail=contributions&pretty=yes', headers=headers)
@@ -1115,8 +1105,6 @@ def remind_referees():
         irow=irow+1
             
 def get_referees_list():            
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     data = requests.get(f'{event_url}manage/papers/teams/', headers=headers)
     for line in data.text.split("\\n"):
@@ -1250,8 +1238,6 @@ def get_paper_info(db_id,use_cache=False,sleep_before_online=0.5):
     #print('use_online',use_online)
     if use_online:
         time.sleep(sleep_before_online)
-        api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-        event_id = 41
         headers = {'Authorization': f'Bearer {api_token}'}
         url=f'{event_url}papers/api/'+str(db_id)
         data = requests.get(url, headers=headers)
@@ -1312,8 +1298,6 @@ def submitted_contribs(force_online=False):
         
     if use_online:
         #Reads a submitted contribution based on its ID
-        api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-        event_id = 41
         headers = {'Authorization': f'Bearer {api_token}'}
         data = requests.get(f'https://indico.jacow.org/event/{event_id}/manage/papers/assignment-list/', headers=headers)
         fdata=open(fname,"w")
@@ -1909,8 +1893,6 @@ def record_rejected_paper(contrib_id):
 
 def judge_paper(paper_db_id, decision,comment):
     print("Judging paper ", paper_db_id)
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     if decision == "To be corrected" or decision == "Minor revisions (no second round)":
         payload = {'action': 'to_be_corrected' ,  'comment': comment}
@@ -1930,8 +1912,6 @@ def judge_paper(paper_db_id, decision,comment):
     
 def comment_paper(paper_db_id, comment):
     print("Commenting paper ", paper_db_id)
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     payload = { 'comment': comment}
     data = requests.post(f'{event_url}papers/api/'+str(paper_db_id)+'/comment', headers=headers, data=payload)
@@ -1942,8 +1922,6 @@ def comment_paper(paper_db_id, comment):
     #    exit()
 
 def reopen_paper(paper_db_id):
-    api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-    event_id = 41
     headers = {'Authorization': f'Bearer {api_token}'}
     data = requests.delete(f'{event_url}papers/api/'+str(paper_db_id), headers=headers)
     print('Submission reopened for paper ',paper_db_id, data.status_code)
@@ -2445,8 +2423,6 @@ def find_participant_by_email(email):
     return None
 
 def search_user(email=None,last_name=None,first_name=None): 
-        api_token = "indp_fAKWkervPepBObXLPJ6R1s46EJjU2iqpYAj9oFH0xD"
-        event_id = 41
         headers = {'Authorization': f'Bearer {api_token}'}
         if email is not None:
             data = requests.get(f'https://indico.jacow.org/user/search/?email='+email+'&favorites_first=true', headers=headers)

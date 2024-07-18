@@ -1,0 +1,9 @@
+MC1;0,xxx@xxx.com;0,xxx@xxx.com
+MC2;876,xxx@xxx.com;867,xxx@xxx.com;
+MC3;876,xxx@xxx.com;867,xxx@xxx.com;
+MC4;876,xxx@xxx.com;867,xxx@xxx.com;
+MC5;876,xxx@xxx.com;867,xxx@xxx.com;
+MC6;876,xxx@xxx.com;867,xxx@xxx.com;
+MC7;876,xxx@xxx.com;867,xxx@xxx.com;
+MC8;876,xxx@xxx.com;867,xxx@xxx.com;
+

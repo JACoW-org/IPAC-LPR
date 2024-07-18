@@ -1,0 +1,14 @@
+IPAC LPR - Thank you for re-uploading your paper
+Dear author,
+
+Thank you for re-uploading your paper in the IoP format. We have received it and we will soon submit it to the IoP.
+
+No further action is required from you at the moment.
+
+Title: ##title##
+id: ##paper_id##
+
+Best wishes,
+
+Nicolas Delerue
+on behalf of the IPAC'23 LPR SPB

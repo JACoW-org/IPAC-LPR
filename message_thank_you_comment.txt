@@ -1,0 +1,12 @@
+About your comment on the paper your are reviewing
+Dear ##name##,
+
+We noticed that you left a comment on the page of the paper ##paper_id##  (##title##).
+##url_paper##
+
+These comments can not be processed. To submit your review please click on the "Review" button on the same page and fill the form that will appear.
+
+Thank you for your help with the IPAC'23 Light Peer Review.
+
+Yours sincerely,
+Nicolas Delerue, IPAC'23 Light Peer Review Manager

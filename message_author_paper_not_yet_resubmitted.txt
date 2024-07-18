@@ -1,0 +1,16 @@
+Please resubmit your paper for the IPAC LPR after corrections
+Dear author,
+
+Thank you for submitting the paper below to the IPAC'23 Light Peer Review. I emailed you a few days ago with the reviewers comments below, expecting that you would resubmit the paper within 5 days. So far it seems that your paper has not yet been resubmitted. Could you upload the new version of your paper at ##url_paper## as soon as possible? If you have any difficulties with resubmitting this paper, please let me know.
+
+Title: ##title##
+id: ##paper_id##
+##url_paper##
+
+##reviewers_comments##
+
+
+Thank you in advance,
+
+Nicolas Delerue
+on behalf of the IPAC'23 LPR SPB

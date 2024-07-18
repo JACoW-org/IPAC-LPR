@@ -1,0 +1,18 @@
+IPAC LPR - Please fix your reformatted paper for publication in IoP Proceedings
+Dear author,
+
+Thank you for re-uploading your paper ##paper_id## . However you did not follow the guideline at  https://publishingsupport.iopscience.iop.org/author-guidelines-for-conference-proceedings/
+
+Could you please re-upload your paper using the template provided by the IoP and following the guidelines at https://publishingsupport.iopscience.iop.org/author-guidelines-for-conference-proceedings/
+
+Once your paper will use the right template and will be compliant with the guidelines, please resubmit the PDF file (only the PDF file) at ##url_paper##.
+
+Title: ##title##
+id: ##paper_id##
+
+The deadline for resubmitting your paper is July 1st 2023 but we would appreciate if you could submit it earlier.
+
+Thank you in advance,
+
+Nicolas Delerue
+on behalf of the IPAC'23 LPR SPB

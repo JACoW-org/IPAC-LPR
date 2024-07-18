@@ -1,0 +1,15 @@
+Deadline Thursday noon - Please resubmit your paper for the IPAC LPR after corrections
+Dear author,
+
+Thank you for submitting the paper below to the IPAC'23 Light Peer Review. I emailed you a few days ago asking you to correct it and resubmit it. To date your paper has not yet been resubmitted. Please resubmit your paper at ##url_paper## by tomorrow, Thursday 11th May noon.
+
+If you have any difficulties with resubmitting this paper, please let me know as soon as possible.
+
+Title: ##title##
+id: ##paper_id##
+##url_paper##
+
+Thank you in advance,
+
+Nicolas Delerue
+on behalf of the IPAC'23 LPR SPB

@@ -1,0 +1,12 @@
+[IPAC'23 Light Peer Reviewing] Paper widthdrawn
+Dear ##name##,
+
+Thank you for accepting to review the manuscript: ##title##
+id: ##paper_id##
+
+The authors have informed us that they would like to withdraw the paper. No further action is requested from you on this paper.
+
+Thank you for your help.
+
+Yours sincerely,
+Nicolas Delerue, IPAC'23 Light Peer Review Manager

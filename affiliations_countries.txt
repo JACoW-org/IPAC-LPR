@@ -1,0 +1,488 @@
+"Horia Hulubei" National Institute for R&D in Physics and Nuclear Engineering;Romania
+University of Kashan;Iran
+sepideh;Iran
+Kirikkale University;Turkey
+"Ente per le Nuove Tecnologie, l'Energie e l'Ambiente";Italy
+"Universita' degli Studi di Milano & INFN";Italy
+"Universita' degli Studi di Milano";Italy
+ALBA Synchrotron Light Source;Spain
+ALBA-CELLS Synchrotron;Spain
+Aichi Synchrotron Radiation Center;Japan
+Akita National College of Technology;Japan
+Albert Einstein Center for Fundamental Physics;Switzerland
+An-Najah National University;Palestine
+Anhui University;China
+Ankara University Institute of Accelerator Technologies;Turkey
+Argonne National Laboratory;United States
+Ariel University;Israel
+Aristotle University of Thessaloniki;Greece
+Arizona State University;United States
+Australian Nuclear Science and Technology Organisation;Australia
+Australian Synchrotron - ANSTO;Australia
+Australian Synchrotron Company;Australia
+Axon Cable SAS;France
+BEVATECH;Germany
+Belgian Nuclear Research Centre in Mol;Belgium
+Berliner Hochschule fuer Technik;Germany
+Brookhaven National Laboratory (BNL);United States
+Brookhaven National Laboratory;United States
+CANDLE Synchrotron Research Institute;Armenia
+CERN;Switzerland
+Catania University;Italy
+Center for the Advancement of Natural Discoveries using Light Emission;Armenia
+Centro Nazionale di Adroterapia Oncologica;Italy
+Centro de Investigaciones Energéticas, Medioambientales y Tecnológicas;Spain
+Charité - Universitätsmedizin Berlin;Germany
+Chiang Mai University;China
+Chiang Mai University;Thailand
+Chinese Academy of Sciences;China
+Chongqing University;China
+Cockcroft Institute, UK and the University of Manchester;United Kingdom
+Cockcroft Institute;United Kingdom
+Commissariat à l'Energie Atomique et aux Energies Alternatives;France
+Commissariat à l'Energie Atomique;France
+Cornell University (CLASSE);United States
+Cryoelectra GmbH;Germany
+Cyber Techno (Limited Company);Germany
+DESY;Germany
+DREEBIT GmbH;Germany
+Daresbury Laboratory;United Kingdom
+Dehnel - Particle Accelerator Components & Engineering, Inc.;Canada
+Deutsches Elektronen Synchrotron (DESY) and Center for Free Electron Science (CFEL);Germany
+Deutsches Elektronen-Synchrotron DESY at Zeuthen;Germany
+Deutsches Elektronen-Synchrotron;Germany
+Devi Ahilya University;India
+Diamond Light Source Ltd;United Kingdom
+Dimtel, Inc.;United States
+Dongguan Neutron Science Center;China
+EBG MedAustron GmbH;Austria
+ELI Beamlines Czech Republic;Czechia
+ENEA Casaccia;Italy
+ENEA;Italy
+Ecole Polytechnique Fédérale de Lausanne;Switzerland
+Electrotechnologies Selem Inc;Canada
+Elettra-Sincrotrone Trieste S.C.p.A.;Italy
+Ente per le Nuove Tecnologie, l'Energie e l'Ambiente;Italy
+EuXFEL;Germany
+European Organization for Nuclear Research;Switzerland
+European Scientific Institute;France
+European Spallation Source ERIC;Sweden
+European Synchrotron Radiation Facility;France
+European XFEL GmbH;Germany
+Extreme Light Infrastructure;Czechia
+Facility for Rare Isotope Beams, Michigan State University;United States
+Facility for Rare Isotope Beams;United States
+Fondazione Bruno Kessler;Italy
+Forschungszentrum Jülich GmbH;Germany
+Forschungszentrum Jülich;Germany
+Fraunhofer IWS;Germany
+Fusion For Energy;France
+GANIL;France
+GLOBAL GREEN ENVIRONMENTAL NETWORK;Ghana
+GSI Helmholtzzentrum für Schwerionenforschung GmbH;Germany
+Geneva University;Switzerland
+Goethe Universität Frankfurt;Germany
+Grand Accélérateur Nat. d'Ions Lourds;France
+HEIA-FR;Switzerland
+HOLKAR SCIENCE COLLEGE;India
+Heidelberg Ionenstrahl-Therapie Centrum;Germany
+Helmholtz Institut Mainz;Germany
+Helmholtz-Zentrum Berlin für Materialien und Energie GmbH;Germany
+Helmholtz-Zentrum Berlin für Materialien und Energie;Germany
+High Energy Accelerator Research Organization;Japan
+Hiroshima Synchrotron Radiation Center;Japan
+Hiroshima University;Japan
+Hitachi, Ltd.;Japan
+IFMIF/EVEDA Project Team;Japan
+INFN- Sez. di Padova;Italy
+INFN-LNL;Italy
+Ibaraki University;Japan
+Illinois Institute of Technology;United States
+Insititute of High Energy Physics;China
+Institut Pluridisciplinaire Hubert Curien;France
+Institut für Kernphysik;Germany
+Institute for Basic Science;South Korea
+Institute of Advanced Science Facilities (IASF) PRC - Shenzhen, Guangdong 518100;China
+Institute of High Energy Phsics, Chinese Academy of Sciences;China
+Institute of High Energy Physics;China
+Institute of Modern Physics, Chinese Academy of Sciences;China
+Institute of Nuclear Physics Polish Academy of Sciences;Poland
+Instituto Universitario de Ciencia de los Materiales;Spain
+Instituto de Física Corpuscular;Spain
+Instrument Technology Research Center;Taiwan
+Inter University Accelerator Centre;India
+International Atomic Energy Agency;Austria
+International Union of Pure and Applied Physics;Switzerland
+Iran University of Science and Technology;Iran
+Iranian Light Source Facility;Iran
+Istituto Nazionale Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare - Sez. Roma 1;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Japan Atomic Energy Agency;Japan
+Japan Nuclear Cycle Development Institute;Japan
+Japan Proton Accelerator Research Complex (J-PARC);Japan
+Japan Proton Accelerator Research Complex;Japan
+John Adams Institute;United Kingdom
+Joint Institute for Nuclear Research;Russia
+KEK;Japan
+Karlsruhe Institute of Technology (KIT);Germany
+Karlsruhe Institute of Technology;Germany
+Katholieke Universiteit Leuven;Belgium
+Kings College London;United Kingdom
+Korea Multi-purpose Accelerator Complex;South Korea
+Kurukshetra University;India
+Kyoto University;Japan
+Kyungpook National University;South Korea
+Kyushu University;Japan
+La Sapienza University of Rome;Italy
+Laboratoire Leprince-Ringuet;France
+Laboratoire de Physique des 2 Infinis Irène Joliot-Curie;France
+Lancaster University;United Kingdom;
+Lawrence Berkeley National Laboratory;United States
+Lawrence Livermore National Laboratory;United States
+Los Alamos National Laboratory;United States
+Lucknow University;India
+MCI Management Center Innsbruck;Austria
+Max-Planck-Institut für Physik;Germany
+Mayo Clinic;United States
+Mayo Clinic Florida;United States
+Michigan State University;United States
+Mitsubishi Electric System & Service Co., Ltd;Japan
+Nagoya University;Japan
+Naples University Federico II;Italy
+National Centre for Nuclear Research;Poland
+National Institutes for Quantum Science and Technology;Japan
+National Research Nuclear University;Russia
+National Science Centre;Switzerland
+National Synchrotron Radiation Research Center;Taiwan
+Nevada National Security Site;United States
+New Mexico Consortium;United States
+Nihon Advanced Technology Co., Ltd;Japan
+Nippon Advanced Technology Co., Ltd.;Japan
+Nishina Center for Accelerator-Based Science;Japan
+Northern Illinois University;United States
+Oak Ridge National Laboratory;United States
+Old Dominion University;United States
+Oxford University;United Kingdom
+Particle Beam Physics Lab (PBPL);United States
+Particle Therapy Research Center;Netherlands
+Paul Scherrer Institut;Switzerland
+Peking University;China
+Politecnico di Milano;Italy
+Princeton Plasma Physics Laboratory;United States
+Pulsed Power Japan Laboratory Ltd.;Japan
+RI Research Instruments GmbH;Germany
+RIKEN SPring-8 Center;Japan
+RadiaBeam Technologies, LLC;United States
+RadiaBeam Technologies;United States
+RadiaBeam;United States
+Rheinisch-Westfälische Technische Hochschule;Germany
+Riga Technical University;Latvia
+Royal Holloway, University of London;United Kingdom
+Ruder Boskovic Institute;Croatia
+Russian Academy of Sciences;Russia
+SAGA Light Source;Japan
+SCK•CEN;Belgium
+SLAC National Accelerator Laboratory;United States
+Sapienza University of Rome;Italy
+Sardar Vallabhbhai National Institute of Technology;India
+Science and Technology Facilities Council;United Kingdom
+Shahid Beheshti University;Iran
+Shanghai Advanced Research Institute;China
+Shanghai Institute of Applied Physics;China
+Shanghai Synchrotron Radiation Facility;China
+ShanghaiTech University;China
+Sokendai, the Graduate University for Advanced Studies;Japan
+South East European International Institute for Sustainable Technologies;Switzerland
+Stanford University;United States
+State Key Laboratory of Intense Pulsed Radiation Simulation and Effect;China
+Synchrotron Light Research Institute;Thailand
+Synchrotron Soleil;France
+Synchrotron-light for Experimental Science and Applications in the Middle East;Jordan
+THALES Avionics France SAS;France
+THALES LAS France;France
+TRIUMF;Canada
+TU Darmstadt, Germany;Germany
+TU Dortmund University;Germany
+Technical University of Liberec;Czechia
+Technische Hochschule Wildau;Germany
+Technische Universitaet Darmstadt;Germany
+The University of Liverpool;United Kingdom
+The University of Manchester;United Kingdom
+The University of Melbourne;Australia
+The University of Tokyo;Japan
+Thomas Jefferson National Accelerator Facility;United States
+Tohoku University;Japan
+Tsinghua University in Beijing;China
+Tsinghua University;China
+UVSOR Facility;Japan
+Ulsan National Institute of Science and Technology;South Korea
+UniLaSalle Amiens;France
+Univ. degli Studi di Padova;Italy
+Universidade Federal de Ciências da Saúde de Porto Alegre;Brazil
+Universita Milano Bicocca;Italy
+Università degli Studi di Catania;Italy
+Università degli Studi di Milano;Italy
+Università di Brescia;Italy
+Università di Roma II Tor Vergata;Italy
+Universita' degli Studi di Milano & INFN;Italy
+Universita' degli Studi di Milano;Italy
+Universitaet Bonn;Germany
+Universitat Politecnica de Catalunya;Spain
+Universitat Politécnica de Catalunya;Spain
+Université Laval;Canada
+Université Paris Saclay;France
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Université Paris-Saclay;France
+Universite libre de Bruxelles;Belgium
+University of California, Los Angeles;United States
+University of California;United States
+University of Cape Town;South Africa
+University of Chinese Academy of Sciences;China
+University of Dundee;United Kingdom
+University of Geneva;Switzerland
+University of Groningen;Germany
+University of Hamburg;Germany
+University of Illinois at Chicago;United States
+University of Napoli Federico II;Italy
+University of Science and Technology of China;China
+University of Siegen;Germany
+University of Tennessee;United States
+University of Trieste;Italy
+Uppsala University;Sweden
+Vienna University of Technology;Austria
+Viteris Technologies LLC;United States
+Warsaw University of Technology;Poland
+Wigner Research Centre for Physics;Hungary
+Wuhan University;China
+Xi'an Juneng Medical Technologies Co., Ltd.;China
+Zap Surgical Inc;United States
+clear Engineering;Romania
+ibss Group Inc;United States
+Università di Brescia;Italy
+Technical University of Lisbon;Portugal
+Università di Brescia;Italy
+Iranian Light Source Facility;Iran
+Università di Brescia;Italy
+Università di Brescia;Italy
+Università di Brescia;Italy
+Università di Brescia;Italy
+Università di Brescia;Italy
+Università di Brescia;Italy
+Università di Brescia;Italy
+Università di Brescia;Italy
+Università di Brescia;Italy
+Università di Brescia;Italy
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Università di Brescia;Italy
+Università di Brescia;Italy
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Università di Brescia;Italy
+Università di Brescia;Italy
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Università di Brescia;Italy
+Università di Brescia;Italy
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Università di Brescia;Italy
+Università di Brescia;Italy
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Università di Brescia;Italy
+Università di Brescia;Italy
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Università di Brescia;Italy
+Università di Brescia;Italy
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Università di Brescia;Italy
+Università di Brescia;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Università di Brescia;Italy
+Università di Brescia;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Università di Brescia;Italy
+Università di Brescia;Italy
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Università di Brescia;Italy
+Università di Brescia;Italy
+Università di Brescia;Italy
+Università di Brescia;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+European Organization for Nuclear Research;Switzerland
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+European Organization for Nuclear Research;Switzerland
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+European Organization for Nuclear Research;Switzerland
+European Organization for Nuclear Research;Switzerland
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+European Organization for Nuclear Research;Switzerland
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+European Organization for Nuclear Research;Switzerland
+European Organization for Nuclear Research;Switzerland
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+European Organization for Nuclear Research;Switzerland
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+European Organization for Nuclear Research;Switzerland
+European Organization for Nuclear Research;Switzerland
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+Imperial College London;
+European Organization for Nuclear Research;Switzerland
+European Spallation Source ERIC;Sweden
+European Spallation Source ERIC;Sweden
+European Organization for Nuclear Research;Switzerland
+European Organization for Nuclear Research;Switzerland
+Istituto Nazionale di Fisica Nucleare;Italy
+Istituto Nazionale di Fisica Nucleare;Italy
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+High Energy Accelerator Research Organization;Japan
+Université Paris-Saclay, CNRS/IN2P3, IJCLab;France

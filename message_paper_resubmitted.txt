@@ -1,0 +1,22 @@
+Paper resubmitted to the IPAC'23 LPR
+Dear ##name##,
+
+Thank you for reviewing the paper "##title##" (id: ##paper_id##). Following the first round of review the Scientific Publication Board decided, after considering the reviewers reports, to ask the authors to make some corrections to the paper.
+
+The authors have now resubmitted the paper. You can access the paper at ##url_paper##
+
+Could you check that you are satisfied that the authors have adressed the comments you made in the first round?
+
+For the first round, the comments of the reviewer were the following:
+*****
+##reviewers_comments##
+*****
+
+As this is the second round of review we ask you either to accept or reject the paper.
+
+Please tell us your decision by cliking on the "review" button at ##url_paper##
+
+Thank you for your help.
+
+Yours sincerely,
+Nicolas Delerue, IPAC'23 Light Peer Review Manager

@@ -1,0 +1,14 @@
+Thank you for your review
+Dear ##name##,
+
+Thank you for reviewing the paper: ##title##
+id: ##paper_id##
+
+Your contribution is highly appreciated. Once both reviewers will have submitted their review the Scientific Publication Board of IPAC'23 will take a decision in light of the reviewers' reports. We may contact you if a second round of review is needed.
+
+To complete the Light Peer Review process we may need additional review. If you are available to review an additional manuscript, could you indicate so by filling the form at ##url##
+
+Thank you for your help.
+
+Yours sincerely,
+Nicolas Delerue, IPAC'23 Light Peer Review Manager

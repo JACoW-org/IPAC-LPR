@@ -1,0 +1,16 @@
+2nd round complete for paper ##paper_id## after minor corrections
+Dear SPB,
+
+The following paper had been asked minor corrections and has now been resubmitted.
+
+##reviewers_comments##
+
+***
+
+The proposed action is: ##proposed_action##
+
+Please let me know within 48h if you disagree with this proposal.
+
+Thank you in advance,
+
+Nicolas

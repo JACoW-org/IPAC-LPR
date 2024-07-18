@@ -1,0 +1,19 @@
+IPAC LPR - Please upload your reformatted paper for publication in IoP Proceedings: 
+Dear author,
+
+Congratulations for having your paper accepted by the IPAC'23 LPR.
+We have now received the formatting guidelines from IoP. They are at https://publishingsupport.iopscience.iop.org/author-guidelines-for-conference-proceedings/
+
+To collect the papers to be submitted to the IoP Proceedings we will re-open submission on the indico website for the accepted papers and then upload them to the IoP server.
+
+Could you please upload your paper as a PDF file in the IoP format at ##url_paper##
+
+Title: ##title##
+id: ##paper_id##
+
+The deadline for resubmitting your paper is July 1st 2023 but we would appreciate if you could submit it earlier.
+
+Thank you in advance,
+
+Nicolas Delerue
+on behalf of the IPAC'23 LPR SPB

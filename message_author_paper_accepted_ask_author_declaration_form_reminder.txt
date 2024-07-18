@@ -1,0 +1,27 @@
+IPAC LPR - Reminder - Please send your Author Declaration form
+Dear author,
+
+I sent you a message a few days ago asking you to complete the IoP Author Declaration Form. This is required by the IoP in order to publish the IPAC'23 LPR papers.
+
+Could you please fill the file available at https://www.ipac23.org/documents/AuthorDeclarationForm_IPAC23.pdf and return it to me as soon as possible? 
+
+The IoP policies available here: https://publishingsupport.iopscience.iop.org/questions/iop-proceedings-licence/ and there: https://publishingsupport.iopscience.iop.org/ethical-policy-journals/ 
+ 
+You can return the file either by uploading it at https://filesender.renater.fr/?s=upload&vid=a91cbe07-992e-45e0-b425-b42d6593a32f or by replying to this email.
+
+For the title of the paper, please use the title as it is in the final version of your paper.
+
+As Paper ID, please use the paper contribution ID below:
+
+Paper title: ##title##
+Paper contribution id: ##paper_id##
+
+If you already replied to my previous request, please let me know with the date on which you sent the form as it has not been recorded.
+
+Sorry for this last minute request that has been passed on us by the IoP.
+
+Thank you in advance,
+
+Nicolas Delerue
+IPAC'23 LPR Manager
+

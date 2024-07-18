@@ -1,0 +1,16 @@
+IPAC LPR - Please upload your reformatted paper for publication in IoP Proceedings: 
+Dear author,
+
+Thank you for re-uploading your paper for the IoP proceedings. However you have submitted several files and we need only the PDF file in the last submission.
+
+Could you please re-upload your paper as a PDF file (and only the PDF file) in the IoP format at ##url_paper##
+
+Title: ##title##
+id: ##paper_id##
+
+The deadline for resubmitting your paper is July 1st 2023 but we would appreciate if you could submit it earlier.
+
+Thank you in advance,
+
+Nicolas Delerue
+on behalf of the IPAC'23 LPR SPB

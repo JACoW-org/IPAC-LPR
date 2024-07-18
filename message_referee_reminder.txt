@@ -1,0 +1,27 @@
+Reminder: Invitation to review a paper for the IPAC'23 Light Peer Reviewing
+Dear ##name##,
+
+I contacted you a few days ago, asking you if you would be available to review a manuscript submitted to the IPAC'23 LPR.
+
+Could you please let me know as soon as possible if you will be able to review this article by filling the form at ##url## ?
+
+Please read the abstract below and let us know promptly whether or not you will be able to review the manuscript.
+
+Title: ##title##
+id: ##paper_id##
+##url_papier##
+
+Abstract:
+##abstract##
+
+
+Please note that this "light" refereeing is designed to be adequate for a conference proceedings volume: the focus is on ensuring correctness while accepting work on incremental progress, improved technology, new designs etc. in accelerator science. Please adapt your criteria to the acceptance questions in the web form and the guidelines posted at https://ipac-docs.jacow.org/Paper/LPRreviewer/ .
+
+You should be able to see this paper on by login to the IPAC'23 jacow website and going to "Paper Peer Reviewing / Reviewing area": https://indico.jacow.org/event/41/papers/reviewing/
+
+To submit your review, please ckick on the "Review" button on page of the paper. Do not use the comment feature of that page. Also, please refrain from sending files as these may reveal your identity to the submitter.
+
+Thank you in advance for your help.
+
+Yours sincerely,
+Nicolas Delerue, IPAC'23 Light Peer Review Manager

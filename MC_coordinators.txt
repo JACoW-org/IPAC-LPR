@@ -1,0 +1,8 @@
+MC1;Oliver Boine-Frankenheim;Jie Gao
+MC2;Sara Casalbuoni;Mark Boland
+MC3;Victor Malka;Evgenya Simakov
+MC4;Mohammad Eshraqi;Yoichi Sato
+MC5;Sven Reiche;Seunghwan Shin
+MC6;Adriana Rossi;Jui-Che Huang
+MC7;Marie Helene Moscatello;Georg Hoffstaetter
+MC8;Nicolas Delerue;Sandra Biedron

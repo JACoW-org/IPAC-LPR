@@ -1,0 +1,9 @@
+Thank you for your reply regarding the IPAC'23 Light Peer Reviewing
+Dear ##name##,
+
+Thank you for your message.
+We have removed you from the reviewers for paper: ##title##
+id: ##paper_id##
+
+Yours sincerely,
+Nicolas Delerue, IPAC'23 Light Peer Review Manager

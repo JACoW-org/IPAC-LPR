@@ -1,0 +1,21 @@
+# IPAC-LPR
+
+This code manages the Light Peer Review at IPAC (or other jacow based conferences). It is meant to interface with indico.
+
+##To get started:
+
+1) Read the LPR.md file with generic advices about LPR.
+1) Identify your conference ID in Jacow. It will look like https://indico.jacow.org/event/41/ with the 41 corresponding to IPAC'23 replaced by another value corresponding to your conference.
+2) Create a file called "mailpwd.txt" in the directory above the directory wher you have downloaded this code. This file should contain the email password that will be used to send emails. It is used by email_func Do not save your email password in the git.
+
+
+##History of this code:
+
+This code was initially written in a rush for IPAC'23. Some of the coding was done quickly to address problems as the arose and might need to be rewritten/adapted to future needs.
+
+As the code evolved, I tried to keep all the functionalities but some functionnalities needed at the begginning of the conference may have been lost or broken later.
+
+
+
+##To do list:
+- The replaced of https://indico.jacow.org/event/41/ by {event_url}  has not been tested as it was done after the conference.

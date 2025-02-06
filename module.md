@@ -5,7 +5,7 @@
 2. Check on the top right corner that you are logged in. (Your name should appear). As in the example below:
 image: LPR_logged_in.png
 If it is written "login" as in the example below, you should log in using your JACoW credentials.
-image: LPR_not_looged_in.png
+image: ![Not logged in](images/LPR_not_looged_in.png)
 
 3. At the top of the page there is grey "bar" to manage the event. Click on the pen in the middle of that bar to switch to the management page of the event.
 image: LPR_management_switch.png

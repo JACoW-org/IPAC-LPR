@@ -10,7 +10,7 @@ This file contains advices for the person in charge of the IPAC Light Peer Revie
 
 **After SPC2:**
 
-Setup the LPR module in indico.
+Setup the LPR module in indico. See instructions at <module.md>
 
 **At SPC3:**
 

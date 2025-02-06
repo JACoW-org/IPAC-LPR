@@ -2,13 +2,15 @@
 
 1. Go to the indico site of the IPAC for which you want to set-up LPR (typically <https://indico.jacow.org/e/IPACyy> ) where yy is the year of that IPAC.
 
-2. Check on the top right corner that you are logged in. (Your name should appear). As in the example below:
+2. Check on the top right corner that you are logged in (Your name should appear). As in the example below:
 
 ![Logged in](images/LPR_logged_in.png)
 
 If it is written "login" as in the example below, you should log in using your JACoW credentials.
 
 ![Not logged in](images/LPR_not_logged_in.png)
+
+If you get an "Access denied" error, contact the conference administrator (Scientific secretary or Editor-in-chief) as they need to add the LPR coordinator in the event roles and give to the LPR coordinator permissions on the LPR module. 
 
 3. At the top of the page there is grey "bar" to manage the event. Click on the pen in the middle of that bar to switch to the management page of the event.
 
@@ -43,4 +45,4 @@ Note: reviewers can also be added using some of the scripts.
 
 11. You are ready!
 
-More details in the indico peer-reviewing module can be found at <https://learn.getindico.io/conferences/papers/peer_reviewing/>
+More details in the indico peer-reviewing module can be found at <https://learn.getindico.io/conferences/papers/peer_reviewing/> and at <https://github.com/JACoW-org/docs-IPAC/blob/master/docs/Paper/LPRsetup.md>

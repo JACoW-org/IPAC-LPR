@@ -8,6 +8,10 @@ This file contains advices for the person in charge of the IPAC Light Peer Revie
 
 **1 year before:** Make sure that the LOC has identified a publisher for the LPR volume and included the cost of the LPR in the conference budget. 
 
+**After SPC2:**
+
+Setup the LPR module in indico.
+
 **At SPC3:**
 
 * Decide LPR parameters:

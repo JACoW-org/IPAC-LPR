@@ -53,22 +53,26 @@ for confid in confids:
             for auth_type in ['primaryauthors' , 'speakers' , 'coauthors' , 'submitter' ]:
                 if auth_type=='primaryauthors' :
                     all_authors=all_authors_by_sub_MC[idx]
+                    thekey='person_id'
                 elif auth_type=='speakers' :
                     all_authors=all_authors_by_sub_MC_speakers[idx]
+                    thekey='person_id'
                 elif auth_type=='coauthors' :
                     all_authors=all_authors_by_sub_MC_coauthors[idx]
+                    thekey='person_id'
                 elif auth_type=='submitter' :
                     all_authors=all_authors_by_sub_MC_submitters[idx]
+                    thekey='id'
                     
                 for author in all_authors :
                     auth_data=uf.get_user_from_db_id(author)
                     showdata=True
                     if args.only_reviewers:
                         showdata=False
-                        if auth_data['db_id'] in reflist:
+                        if auth_data[thekey] in reflist:
                             showdata=True
-                        if 'db_id_all' in auth_data.keys():
-                            for dbid in auth_data['db_id_all']:
+                        if thekey+'_all' in auth_data.keys():
+                            for dbid in auth_data[thekey+'_all']:
                                 if dbid in reflist:
                                     showdata=True
                     if showdata:
@@ -84,26 +88,31 @@ for confid in confids:
                 print("No entry for db_id",theref)
             else:
                 if 'email' in auth_data.keys():
-                    print(auth_data['first_name'],auth_data['last_name'],auth_data['email'])
+                    print(theref,auth_data['first_name'],auth_data['last_name'],auth_data['email'])
                 else:
-                    print(auth_data['first_name'],auth_data['last_name'])
+                    print(theref,auth_data['first_name'],auth_data['last_name'])
                 for auth_type in ['primaryauthors' , 'speakers' , 'coauthors' , 'submitter' ]:
                     auth_MC=[]
                     for idx in range(len(the_sub_MC_list)):
                         if auth_type=='primaryauthors' :
                             all_authors=all_authors_by_sub_MC[idx]
+                            thekey='person_id'
                         elif auth_type=='speakers' :
                             all_authors=all_authors_by_sub_MC_speakers[idx]
+                            thekey='person_id'
                         elif auth_type=='coauthors' :
                             all_authors=all_authors_by_sub_MC_coauthors[idx]
+                            thekey='person_id'
                         elif auth_type=='submitter' :
                             all_authors=all_authors_by_sub_MC_submitters[idx]
-                        if str(auth_data['db_id']) in str(all_authors):
-                            auth_MC.append(the_sub_MC_list[idx])
-                        if 'db_id_all' in auth_data.keys():
-                            for dbid in auth_data['db_id_all']:
-                                if str(dbid) in str(all_authors):
-                                    auth_MC.append(the_sub_MC_list[idx])
+                            thekey="id"
+                        if thekey in auth_data.keys():
+                            if str(auth_data[thekey]) in str(all_authors):
+                                auth_MC.append(the_sub_MC_list[idx])
+                            if thekey+'_all' in auth_data.keys():
+                                for dbid in auth_data[thekey+'_all']:
+                                    if str(dbid) in str(all_authors):
+                                        auth_MC.append(the_sub_MC_list[idx])
                     if len(auth_MC)>0:
                         auth_MC=sorted(list(set(auth_MC)))
                         print("   ",auth_type,auth_MC)                        

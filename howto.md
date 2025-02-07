@@ -24,3 +24,8 @@ Examples:
     ./find_user.py --last_name delerue
     ./find_user.py --first_name nicolas
     ./find_user.py --db_id 877
+    
+### How to check the subtracks (subMC) of all reviewers?
+After creating the authors map, use the script ./read_authors_map.py with  --check_reviewers as argument
+Example:
+    ./read_authors_map.py --check_reviewers

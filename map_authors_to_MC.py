@@ -77,11 +77,11 @@ for confid in confids:
                     uf.add_user_info(speak['person_id'],speak)
                     uf.add_paper_to_user(speak['person_id'],confid,str(contrib['db_id']),auth_type)
                     if auth_type == 'coauthors': 
-                        all_authors_by_sub_MC_coauthors[idx].append(speak['db_id'])
+                        all_authors_by_sub_MC_coauthors[idx].append(speak['person_id'])
                     elif auth_type == 'speakers': 
-                        all_authors_by_sub_MC_speakers[idx].append(speak['db_id'])
+                        all_authors_by_sub_MC_speakers[idx].append(speak['person_id'])
                     else:
-                        all_authors_by_sub_MC[idx].append(speak['db_id'])
+                        all_authors_by_sub_MC[idx].append(speak['person_id'])
     for subMC in the_sub_MC_list:
         idx=the_sub_MC_list.index(subMC)
         #print(subMC,idx)

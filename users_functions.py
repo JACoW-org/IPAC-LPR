@@ -91,11 +91,11 @@ def get_user_from_db_id(db_id):
     global users
     matchid=[]
     for userid in users.keys(): 
-        if 'db_id' in users[userid].keys():
-            if str(users[userid]['db_id'])==str(db_id):
+        if 'id' in users[userid].keys():
+            if str(users[userid]['id'])==str(db_id):
                  matchid.append(userid)
-        if 'db_id_all' in users[userid].keys():
-            if str(db_id) in users[userid]['db_id_all']:
+        if 'id_all' in users[userid].keys():
+            if str(db_id) in users[userid]['id_all']:
                 matchid.append(userid)
     matchid=list(set(matchid))
     #print(matchid)

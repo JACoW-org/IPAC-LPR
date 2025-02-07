@@ -8,10 +8,6 @@ This file contains advices for the person in charge of the IPAC Light Peer Revie
 
 **1 year before:** Make sure that the LOC has identified a publisher for the LPR volume and included the cost of the LPR in the conference budget. 
 
-**After SPC2:**
-
-Setup the LPR module in indico. See instructions at [here](./module.md).
-
 **At SPC3:**
 
 * Decide LPR parameters:
@@ -25,8 +21,10 @@ Setup the LPR module in indico. See instructions at [here](./module.md).
 **After SPC3:**
 
 * Ensure you have a contact name with the publisher.
-* Download the code at https://github.com/JACoW-org/IPAC-LPR and adapt it to your conference.
+* Setup the LPR module in indico. See instructions at [here](./module.md).
+* Download the code at https://github.com/JACoW-org/IPAC-LPR and adapt it to your conference. See the [scripts setup](./scripts_setup.md).
 * Check with the publisher if they need an author consent form and who should send it to the authors (them or you).
+* For more details on the script see the [How to...](./howto.md)
 
 ## Things to ask for:
 

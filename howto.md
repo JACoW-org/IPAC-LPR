@@ -1,4 +1,4 @@
-### How tos
+### How to?
 
 ### How to find help on a script?
 Most script accept the "--help" argument to give their syntax.

@@ -7,7 +7,7 @@ import openpyxl
 import numpy as np
 import requests
 import json
-import os,time
+import os,time,sys
 import random
 import joblib
 import email_func as ef 
@@ -15,10 +15,20 @@ import datetime
 import urllib.parse
 
 #Settings
-event_url="https://indico.jacow.org/event/41/"
-api_token = "xxx"
 event_id = 41
 
+if not ('api_token' in locals() or 'api_token' in globals()):
+    fname="../api_token.txt"
+    try:
+        fpwd=open(fname)
+        api_token=fpwd.readlines()[0]
+        fpwd.close()
+    except:
+        print("Unable to read ",fname)
+        print("You need to create a file called api_token containing your api_token in the directory above the one where the LPR scripts are located")
+        sys.exit(1)
+
+event_url="https://indico.jacow.org/event/"+str(event_id)+"/"
 
 #print("jacow_nd_func imported")
 Requests_timeout=20
@@ -774,7 +784,7 @@ def assign_referees_to_MC():
             ref_id=str(thecell_id.value)
             if can_referee_get_additional_paper(ref_id):
                 n_referees=n_referees+1
-                thecell_name=list_referees_wb.cell(row=irow,column=col_for_name)
+                #thecell_name=list_referees_wb.cell(row=irow,column=col_for_name)
                 thecell_country=list_referees_wb.cell(row=irow,column=col_for_country)
                 the_continent=get_continent(thecell_country.value)
                 thecell_MC=list_referees_wb.cell(row=irow,column=col_for_MC)
@@ -950,40 +960,61 @@ def randomly_suggest_two_referees(MCtxt,continent,paper_id,n_referees_needed=2):
                     #print(referees_for_all_MCs_by_continent[iMC][icont])
     return selected_refs
 
-def load_contribs():
+def load_contribs(evtid=None):
     global data_json_contribs
+    if evtid==None:
+        evtid=event_id
     data_json_contribs=None 
-    fname="ipac23_contribs.json"
-    file_age=time.time()-os.path.getmtime(fname)
+    fname=f'data/all_contribs_{evtid}.json'
+    if os.path.isfile(fname):
+        file_age=time.time()-os.path.getmtime(fname)
+    else:
+        print("Contribution file did not exist...")
+        file_age=999999
     #print('file_age',file_age)
     if file_age > (24*3600):
         print('file_age',file_age)
         use_online=True
-        print("Updating contribs from online")
+        print("Updating contribs from online data.")
     else:
         use_online=False
 
     if use_online:
         headers = {'Authorization': f'Bearer {api_token}'}
+        data_url= f'https://indico.jacow.org/export/event/{evtid}.json?detail=contributions&pretty=yes'
+        print('Data URL=',data_url)
         try:
-            data = requests.get(f'https://indico.jacow.org/export/event/41.json?detail=contributions&pretty=yes', headers=headers)
+            data = requests.get(data_url, headers=headers)
         except:
             print("Unable to access referees file")
             exit()
-        data_json_contribs=data.json()
+            
+        if not data.status_code == 200:
+            print("Error trying to access the conttibution data")
+            print("URL was: ",data_url)
+            print("Status code:",data.status_code)
+            if data.text.find("invalid_token")>0:
+                print("Invalid access key")
+            elif data.text.find("error-box")>0:
+                error_idx=data.text.find("error-box")
+                print(data.text[error_idx:error_idx+500])
+            exit()
+        data_json_these_contribs=data.json()
         print('get done', flush=True)
         
         save_data=True
         #save_data=False
         if save_data:
             fdata=open(fname,"w")
-            json.dump(data_json_contribs,fdata)
+            json.dump(data_json_these_contribs,fdata)
             fdata.close()
     else:
         fdata=open(fname,"r")
-        data_json_contribs=json.load(fdata)
+        data_json_these_contribs=json.load(fdata)
         fdata.close()
-
+    if evtid==event_id:
+        data_json_contribs=data_json_these_contribs
+    return data_json_these_contribs
 
 def find_contrib(the_id=None,the_db_id=None):
     global data_json_contribs
@@ -1267,25 +1298,29 @@ def get_paper_info(db_id,use_cache=False,sleep_before_online=0.5):
 n_reviews=[]
 contribs_accepted=[]
 contribs_rejected=[]
-submitted_contribs=[]
+submitted_contribs_list=[]
 to_be_corrected_contribs=[]
 cpt_reviews=[ -1, -1, -1 ]
 
-def submitted_contribs(force_online=False):
+def submitted_contribs(evtid=None,force_online=False):
     global n_reviews
     global contribs_accepted
     global contribs_rejected
-    global submitted_contribs
+    global submitted_contribs_list
     global to_be_corrected_contribs
     #global cpt_reviews
-    submitted_contribs=[]
+    submitted_contribs_list=[]
     to_be_corrected_contribs=[]
     contribs_accepted=[]
     contribs_rejected=[]
     
-    fname="ipac23_submitted_contribs.html"
-    file_age=time.time()-os.path.getmtime(fname)
-    #print('file_age',file_age)
+    if evtid==None:
+        evtid=event_id
+    fname=f'data/submitted_contribs_{evtid}.html'
+    if os.path.isfile(fname):
+        file_age=time.time()-os.path.getmtime(fname)
+    else:
+        file_age=999999
     if file_age > (1*60*60) or force_online :
         print('file_age',file_age)
         use_online=True
@@ -1299,17 +1334,23 @@ def submitted_contribs(force_online=False):
     if use_online:
         #Reads a submitted contribution based on its ID
         headers = {'Authorization': f'Bearer {api_token}'}
-        data = requests.get(f'https://indico.jacow.org/event/{event_id}/manage/papers/assignment-list/', headers=headers)
-        fdata=open(fname,"w")
-        fdata.write(data.text)
-        fdata.close()
-        data_text=data.text
+        data_url=f'https://indico.jacow.org/event/{evtid}/manage/papers/assignment-list/'
+        data = requests.get(data_url, headers=headers)
+        if data.status_code == 200:
+            fdata=open(fname,"w")
+            fdata.write(data.text)
+            fdata.close()
+            data_text=data.text
+        else:
+            print("Error when reading ",data_url)
+            print("Error code",data.status_code)
+            data_text=""
     else:
         fdata=open(fname,"r")
         data_text=fdata.read()
         fdata.close()
 
-
+    
     all_lines=data_text.split("\n")
     contrib_id=None
     unsubmitted_contribs=[]
@@ -1341,7 +1382,7 @@ def submitted_contribs(force_online=False):
                 unsubmitted_contribs.append(contrib_id)
                 contrib_id=None
             elif '"submitted"' in line:
-                submitted_contribs.append(contrib_id)
+                submitted_contribs_list.append(contrib_id)
                 n_reviews.append(-1)
                 contrib_id=None
                 search_review=True
@@ -1381,7 +1422,7 @@ def submitted_contribs(force_online=False):
             if search_review==False:
                 if n_reviews[-1]>0:
                     if verify_contrib_consistency:
-                        check_reviews_for_contrib(submitted_contribs[-1],n_reviews[-1])
+                        check_reviews_for_contrib(submitted_contribs_list[-1],n_reviews[-1])
                 #print('search_revision',search_revision)
         if search_revision and "revision-column" in line:
             search_revision=False
@@ -1392,33 +1433,33 @@ def submitted_contribs(force_online=False):
             search_reviewer=False
             the_reviewer=line.split('"')[1].strip()
             #print('the_reviewer',the_reviewer)
-            if verify_contrib_consistency:
-                check_contrib_consistency(submitted_contribs[-1],the_judges,the_reviewer)
+            #if verify_contrib_consistency:
+            #    check_contrib_consistency(submitted_contribs[-1],the_judges,the_reviewer)
         if search_judge and "data-searchable" in line:
             search_judge=False
             search_reviewer=True
             the_judges=line.split('"')[1].strip()
             #print('the_judges',the_judges)
 
-    print('Submitted contribs: ',len(submitted_contribs))
+    print('Submitted contribs: ',len(submitted_contribs_list))
     print('Unsubmitted contribs: ',len(unsubmitted_contribs))
     print('To be corrected contribs', len(to_be_corrected_contribs))
     print('Accepted ', n_accepted)
     print('Rejected ', n_rejected)
 
-    return submitted_contribs
+    return submitted_contribs_list
 
 def print_contrib_stats():
     global n_reviews
     global contribs_accepted
     global contribs_rejected
-    global submitted_contribs
+    global submitted_contribs_list
     global to_be_corrected_contribs
     global cpt_reviews
 
     print("### Statistics ###")
     print("* Stats from contrib file *")
-    print('len(submitted_contribs)',len(submitted_contribs))
+    print('len(submitted_contribs_list)',len(submitted_contribs_list))
     #print('n_reviews',n_reviews)
     print('cpt_reviews',cpt_reviews)
     print('len(contribs_accepted)',len(contribs_accepted))

@@ -20,7 +20,7 @@ except:
         fpwd=open(fname)
         mailpwd=fpwd.readlines()[0]
         fpwd.close()
-        print('mailpwd loaded')
+        #print('mailpwd loaded')
     except:
         print("Unable to read ",fname)
         sys.exit(1)

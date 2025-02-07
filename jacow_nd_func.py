@@ -21,7 +21,7 @@ if not ('api_token' in locals() or 'api_token' in globals()):
     fname="../api_token.txt"
     try:
         fpwd=open(fname)
-        api_token=fpwd.readlines()[0]
+        api_token=fpwd.readlines()[0].strip()
         fpwd.close()
     except:
         print("Unable to read ",fname)
@@ -980,17 +980,18 @@ def load_contribs(evtid=None):
         use_online=False
 
     if use_online:
-        headers = {'Authorization': f'Bearer {api_token}'}
+        #headers = {'Authorization': f'Bearer {api_token}'}
+        headers = { }
         data_url= f'https://indico.jacow.org/export/event/{evtid}.json?detail=contributions&pretty=yes'
         print('Data URL=',data_url)
         try:
             data = requests.get(data_url, headers=headers)
         except:
-            print("Unable to access referees file")
+            print("Unable to access referees file. URL=",data_url)
             exit()
             
         if not data.status_code == 200:
-            print("Error trying to access the conttibution data")
+            print("Error trying to access the contribution data")
             print("URL was: ",data_url)
             print("Status code:",data.status_code)
             if data.text.find("invalid_token")>0:

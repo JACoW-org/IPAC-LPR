@@ -18,7 +18,7 @@ except:
     fname="../mailpwd.txt"
     try:
         fpwd=open(fname)
-        mailpwd=fpwd.readlines()[0]
+        mailpwd=fpwd.readlines()[0].strip()
         fpwd.close()
         #print('mailpwd loaded')
     except:

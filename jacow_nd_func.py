@@ -13,6 +13,8 @@ import joblib
 import email_func as ef 
 import datetime
 import urllib.parse
+from hashlib import md5
+
 
 #Settings
 event_id = 41
@@ -980,8 +982,8 @@ def load_contribs(evtid=None):
         use_online=False
 
     if use_online:
-        #headers = {'Authorization': f'Bearer {api_token}'}
-        headers = { }
+        headers = {'Authorization': f'Bearer {api_token}'}
+        #headers = { }
         data_url= f'https://indico.jacow.org/export/event/{evtid}.json?detail=contributions&pretty=yes'
         print('Data URL=',data_url)
         try:
@@ -2464,25 +2466,42 @@ def find_participant_by_email(email):
         irow=irow+1
     return None
 
-def search_user(email=None,last_name=None,first_name=None): 
+maxSearch=10
+global iSearch
+iSearch=0
+def search_user(email=None,last_name=None,first_name=None,emailHash=None,verbosemode=True):
+    global iSearch
+    iSearch=iSearch+1
+    if iSearch>maxSearch:
+        print("Too many user searches done!!!")
+        return None
+    else:
         headers = {'Authorization': f'Bearer {api_token}'}
         if email is not None:
-            data = requests.get(f'https://indico.jacow.org/user/search/?email='+email+'&favorites_first=true', headers=headers)
+            data = requests.get(f'https://indico.jacow.org/user/search/?email={email}&favorites_first=true&external=true', headers=headers)
         elif last_name is not None:
             if first_name is not None:
-                data = requests.get(f'https://indico.jacow.org/user/search/?last_name='+last_name+'&first_name='+first_name, headers=headers)
+                data = requests.get(f'https://indico.jacow.org/user/search/?last_name={last_name}&external=true&first_name={first_name}', headers=headers)
             else:
-                data = requests.get(f'https://indico.jacow.org/user/search/?last_name='+last_name, headers=headers)
+                data = requests.get(f'https://indico.jacow.org/user/search/?last_name={last_name}&external=true', headers=headers)
 
         if not data.status_code == 200:
             print("Error searching for user")
             return None
         data_json=data.json()
         if len(data_json['users'])>1:
-            print("More than one user found")
+            if verbosemode:
+                print("More than one user found for",first_name,last_name, emailHash, len(data_json['users']))
+            if emailHash is not None:
+                for user in data_json['users']:
+                    if verbosemode:
+                        print(user['email'], user['first_name'],user['last_name'] ,md5(user['email'].encode()).hexdigest(),emailHash)
+                    if md5(user['email'].encode()).hexdigest()==emailHash:
+                        return user
             return None
         elif len(data_json['users'])==0:
-            print("No user found")
+            if verbosemode:
+                print("No user found")
             return None
         else:
             return data_json['users'][0]

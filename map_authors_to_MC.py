@@ -15,6 +15,8 @@ import joblib
 import users_functions as uf
 
 
+#import time
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--confid", help="The conference(s) id eg: 41 or 41,95")
 parser.parse_args()
@@ -66,22 +68,27 @@ for confid in confids:
                 #print(the_paper['last_revision']['submitter'])
                 #print(the_paper['last_revision']['submitter']['id'])
                 #exit()
-                uf.add_user_info("s"+str(the_paper['last_revision']['submitter']['id']),the_paper['last_revision']['submitter'])
-                uf.add_paper_to_user("s"+str(the_paper['last_revision']['submitter']['id']),confid,str(contrib['db_id']),"submitter")
-                all_authors_by_sub_MC_submitters[idx].append("s"+str(the_paper['last_revision']['submitter']['id']))               
+                uf.add_user_info(str(the_paper['last_revision']['submitter']['id']),the_paper['last_revision']['submitter'])
+                uf.add_paper_to_user(str(the_paper['last_revision']['submitter']['id']),confid,str(contrib['db_id']),"submitter")
+                all_authors_by_sub_MC_submitters[idx].append(str(the_paper['last_revision']['submitter']['id']))   
+                if (the_paper['last_revision']['submitter']['last_name']).lower()=='delerue':
+                    print("sub:", the_paper['last_revision']['submitter'],the_paper['last_revision']['submitter'].keys(),"subm")
+                    #else:
+                    #print("sub name: ", the_paper['last_revision']['submitter']['last_name'])                      
             for auth_type in ['speakers' , 'primaryauthors' ,'coauthors' ]:
                 for speak in contrib[auth_type]:
                     #print('speak',speak)
-                    speak_name=speak['first_name']+" "+speak['last_name']
+                    #speak_name=speak['first_name']+" "+speak['last_name']
                     #print('\tSpeak name:',speak_name)
-                    uf.add_user_info(speak['person_id'],speak)
-                    uf.add_paper_to_user(speak['person_id'],confid,str(contrib['db_id']),auth_type)
+                    userid=uf.get_user_id(speak['emailHash'])
+                    uf.add_user_info(userid,speak)
+                    uf.add_paper_to_user(userid,confid,str(contrib['db_id']),auth_type)
                     if auth_type == 'coauthors': 
-                        all_authors_by_sub_MC_coauthors[idx].append(speak['person_id'])
+                        all_authors_by_sub_MC_coauthors[idx].append(userid)
                     elif auth_type == 'speakers': 
-                        all_authors_by_sub_MC_speakers[idx].append(speak['person_id'])
+                        all_authors_by_sub_MC_speakers[idx].append(userid)
                     else:
-                        all_authors_by_sub_MC[idx].append(speak['person_id'])
+                        all_authors_by_sub_MC[idx].append(userid)
     for subMC in the_sub_MC_list:
         idx=the_sub_MC_list.index(subMC)
         #print(subMC,idx)
@@ -98,5 +105,8 @@ for confid in confids:
     print('all_authors_by_sub_MC')
     print(all_authors_by_sub_MC)
     joblib.dump([the_sub_MC_list,all_authors_by_sub_MC,all_authors_by_sub_MC_speakers,all_authors_by_sub_MC_coauthors,all_authors_by_sub_MC_submitters],authors_map_fname)
+uf.save_users()
+uf.users_purity()
 uf.clean_users()
+uf.users_purity()
 uf.save_users()

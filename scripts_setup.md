@@ -16,6 +16,8 @@ step and a "mailpwd.txt" with the password to send emails (do not put these info
 
 1. Identify the indico code of the previous conferences from the same series (example: IPAC 23 was at https://indico.jacow.org/event/41/ so its code is 41;  IPAC24=63; IPAC25=81)
 
+1. Adapt the file params.py with the parameters of your conference
+
 1. Create the map of referees by running:
     ./map_authors_to_MC.py --confid 41,63 
 This will create a map of all contributors to IPAC (based on their Jacow database ID) for the selected conferences. 
@@ -26,8 +28,17 @@ This will create a map of all contributors to IPAC (based on their Jacow databas
     ./read_authors_map.py --subMC MC1.A01
     ./read_authors_map.py --check-reviewers
     ./read_authors_map.py --subMC MC1.A01 --only-reviewers
+    ./read_authors_map.py --subMC MC1.A01 --only-reviewers --region-not-americas
 
 You can also try to read the data for several users.    
     ./find_user.py --last_name delerue
-find user
-read_map
+
+
+1. Check that countries are correctly associated with their region:
+    python3 list_all_countries.py
+or under unix:
+    python3 list_all_countries.py | sort | uniq
+
+*** To do
+- Handle affiliations
+- Paper assignement

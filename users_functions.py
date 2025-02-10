@@ -239,8 +239,6 @@ def add_paper_to_user(user_id,conf_id,paper_db_id,auth_type):
     else:
         users[str(user_id)]['papers'][paperidx][2].append(auth_type)
 
-                
-
 
 
 
@@ -392,12 +390,21 @@ def clean_users():
 def get_email_hash(email):
     return md5(email.encode()).hexdigest()
 
+
+    
+def user_is_not_region(user,region_code):
+    if 'country_code' in user.keys():
+        if get_user_region(user['country_code']) not in [ params.REGION_UNKNOWN_CODE , region_code ]:
+            return True
+    return False            
+
+
 def get_user_region(country_code):
     if country_code in params.list_countries_EMEA:
         return params.EMEA_CODE
     if country_code in params.list_countries_Asia:
         return params.ASIA_CODE
-    if country_code in params.list_countries_America:
-        return params.AMERICA_CODE
+    if country_code in params.list_countries_Americas:
+        return params.AMERICAS_CODE
     if country_code=='':
         return params.REGION_UNKNOWN_CODE

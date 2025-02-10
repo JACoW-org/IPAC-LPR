@@ -32,8 +32,8 @@ event_url="https://indico.jacow.org/event/"+str(event_id)+"/"
 #regions
 list_countries_EMEA=[ 'CZ', 'LV', 'AM', 'FR', 'ES', 'BE', 'JO', 'IL', 'DE', 'GH', 'RU', 'NL', 'IR', 'RO', 'AT', 'IT', 'TZ', 'PL', 'SE', 'CH']
 EMEA_CODE="EMEA"
-list_countries_America=[ 'US', 'BR' ]
-AMERICA_CODE="AMERICA"
+list_countries_Americas=[ 'US', 'BR' ]
+AMERICAS_CODE="AMERICAS"
 list_countries_Asia=[ 'JP', 'TH', 'AU', 'CN', 'TW', 'IN', 'KR' ]
 ASIA_CODE="ASIA"
 REGION_UNKNOWN_CODE="Region Unknown"

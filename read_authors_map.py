@@ -21,6 +21,9 @@ parser.add_argument("--confid", help="The conference(s) id eg: 41 or 41,95")
 parser.add_argument("--subMC", help="The subMC for which we want the map")
 parser.add_argument("--check-reviewers", action="store_true", help="Check the sub MC of each reviewer")
 parser.add_argument("--only-reviewers", action="store_true", help="Returns answers only for the members of the reviewers team")
+parser.add_argument("--region-not-emea", action="store_true", help="Returns answers only for the members who are not in EMEA")
+parser.add_argument("--region-not-asia", action="store_true", help="Returns answers only for the members who are not in Asia")
+parser.add_argument("--region-not-americas", action="store_true", help="Returns answers only for the members who are not in the Americas")
 parser.parse_args()
 args = parser.parse_args()
 #print(args)
@@ -36,10 +39,14 @@ else:
 
 uf.load_users()
 
-if args.check_reviewers or args.only_reviewers :
+
+#This is now done in map_authors_to_MC
+'''
+if args.check_reviewers or args.only_reviewers and False:
     #print("Checking reviewers...")
-    reflist=jnf.get_referees_list()
     #for each reviewer we check that s/he is know
+    reflist=jnf.get_referees_list()
+    uf.search_and_add_users_by_id(reflist)
     for refid in reflist:
         refdata=uf.get_user(refid)
         if refdata is None:
@@ -49,6 +56,11 @@ if args.check_reviewers or args.only_reviewers :
                 uf.add_user_info(refid, refnewdata)
                 uf.save_users()
     #print("Checked")
+'''
+
+if args.check_reviewers or args.only_reviewers:
+    reflist=jnf.get_referees_list()
+
 
 for confid in confids:
     authors_map_fname=f'data/all_authors_by_subMC_for_conf_{confid}.data'
@@ -63,16 +75,12 @@ for confid in confids:
             for auth_type in ['primaryauthors' , 'speakers' , 'coauthors' , 'submitter' ]:
                 if auth_type=='primaryauthors' :
                     all_authors=all_authors_by_sub_MC[idx]
-                    thekey='person_id'
                 elif auth_type=='speakers' :
                     all_authors=all_authors_by_sub_MC_speakers[idx]
-                    thekey='person_id'
                 elif auth_type=='coauthors' :
                     all_authors=all_authors_by_sub_MC_coauthors[idx]
-                    thekey='person_id'
                 elif auth_type=='submitter' :
                     all_authors=all_authors_by_sub_MC_submitters[idx]
-                    thekey='id'
                     
                 for author in all_authors :
                     auth_data=uf.get_user(author)
@@ -86,14 +94,21 @@ for confid in confids:
                     if auth_data is not None:
                         if args.only_reviewers:
                             showdata=False
-                            #print("thekey",thekey)
-                            if thekey in auth_data.keys():
-                                if auth_data[thekey] in reflist:
+                            if 'user_id' in auth_data.keys():
+                                if auth_data['user_id'] in reflist:
                                     showdata=True
-                                if thekey+'_all' in auth_data.keys():
-                                    for dbid in auth_data[thekey+'_all']:
-                                        if dbid in reflist:
-                                            showdata=True
+                    if args.region_not_emea:
+                        if uf.user_is_not_region(auth_data, params.EMEA_CODE) == False:
+                            #print('Skipping emea')
+                            showdata=False
+                    if args.region_not_americas:
+                        if uf.user_is_not_region(auth_data, params.AMERICAS_CODE) == False:
+                            #print('Skipping emea')
+                            showdata=False
+                    if args.region_not_asia:
+                        if uf.user_is_not_region(auth_data, params.ASIA_CODE) == False:
+                            #print('Skipping emea')
+                            showdata=False
                     if showdata:
                         #print("auth_data",auth_data)
                         print(auth_type,auth_data['first_name'],auth_data['last_name'],' ',end='') 

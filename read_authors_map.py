@@ -14,7 +14,7 @@ import argparse
 #import numpy as np
 import joblib
 import users_functions as uf
-
+import params
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--confid", help="The conference(s) id eg: 41 or 41,95")
@@ -26,7 +26,7 @@ args = parser.parse_args()
 #print(args)
 
 if args.confid is None:
-    args.confid=str(jnf.event_id)
+    args.confid=str(params.event_id)
 
 
 if (args.confid.find(",")>0):
@@ -34,11 +34,21 @@ if (args.confid.find(",")>0):
 else:
     confids=[args.confid ]    
 
+uf.load_users()
 
 if args.check_reviewers or args.only_reviewers :
+    #print("Checking reviewers...")
     reflist=jnf.get_referees_list()
-
-uf.load_users()
+    #for each reviewer we check that s/he is know
+    for refid in reflist:
+        refdata=uf.get_user(refid)
+        if refdata is None:
+            print("Downloading info on reviewer ", refid)
+            refnewdata=uf.search_user_by_id(refid)
+            if refnewdata is not None:
+                uf.add_user_info(refid, refnewdata)
+                uf.save_users()
+    #print("Checked")
 
 for confid in confids:
     authors_map_fname=f'data/all_authors_by_subMC_for_conf_{confid}.data'
@@ -65,21 +75,33 @@ for confid in confids:
                     thekey='id'
                     
                 for author in all_authors :
-                    auth_data=uf.get_user_from_db_id(author)
+                    auth_data=uf.get_user(author)
                     showdata=True
-                    if args.only_reviewers:
+                    if auth_data is None:
+                        print("Author ",author,"returned None!")
+                        auth_data=uf.get_user(author)
+                        print(auth_data)
+                        exit()
                         showdata=False
-                        if auth_data[thekey] in reflist:
-                            showdata=True
-                        if thekey+'_all' in auth_data.keys():
-                            for dbid in auth_data[thekey+'_all']:
-                                if dbid in reflist:
+                    if auth_data is not None:
+                        if args.only_reviewers:
+                            showdata=False
+                            #print("thekey",thekey)
+                            if thekey in auth_data.keys():
+                                if auth_data[thekey] in reflist:
                                     showdata=True
+                                if thekey+'_all' in auth_data.keys():
+                                    for dbid in auth_data[thekey+'_all']:
+                                        if dbid in reflist:
+                                            showdata=True
                     if showdata:
+                        #print(auth_data)
+                        print(auth_type,auth_data['first_name'],auth_data['last_name'],' ',end='') 
                         if 'email' in auth_data.keys():
-                            print(auth_type,auth_data['first_name'],auth_data['last_name'],auth_data['email'])
-                        else:
-                            print(auth_type,auth_data['first_name'],auth_data['last_name'])
+                            print(auth_data['email'],' ',end='')
+                        if 'country_code' in auth_data.keys():
+                            print(auth_data['country_code'],' ',end='')
+                        print()
                         #print("Papers", auth_data['papers'])
     elif args.check_reviewers:
         for theref in reflist:

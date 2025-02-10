@@ -106,7 +106,6 @@ for confid in confids:
     print(all_authors_by_sub_MC)
     joblib.dump([the_sub_MC_list,all_authors_by_sub_MC,all_authors_by_sub_MC_speakers,all_authors_by_sub_MC_coauthors,all_authors_by_sub_MC_submitters],authors_map_fname)
 uf.save_users()
-uf.users_purity()
 uf.clean_users()
 uf.users_purity()
 uf.save_users()

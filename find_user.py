@@ -27,7 +27,7 @@ args = parser.parse_args()
 uf.load_users()
 
 nmatch=0
-for user in uf.users:
+for user in list(uf.users):
     user_data=uf.users[user]
     match=True
     #print('user',user,user_data)
@@ -39,8 +39,11 @@ for user in uf.users:
             else:
                 match=False
             
-    if args.last_name is not None and 'last_name' in user_data.keys() :
-        if not user_data['last_name'].lower()==args.last_name.lower():
+    if args.last_name is not None:
+        if 'last_name' in user_data.keys() :
+            if not user_data['last_name'].lower()==args.last_name.lower():
+                match=False
+        else:
             match=False
     if args.first_name is not None and 'first_name' in user_data.keys() :
         if not user_data['first_name'].lower()==args.first_name.lower():
@@ -54,7 +57,11 @@ for user in uf.users:
             
     if match:
         print("*** User match")
-        ordered_keys= [ 'user_id', 'title', 'first_name', 'last_name', 'full_name', 'affiliation', 'email']
+        if 'user_id' in user_data.keys() and 'emailHash' in user_data.keys():
+            if user_data['user_id'] == user_data['emailHash']:
+                print("Matching user is not linked to repository. Checking repository for updates.")
+                uf.search_user_id(user_data)
+        ordered_keys= [ 'user_id', 'title', 'first_name', 'last_name', 'full_name', 'affiliation', 'email', 'country_code', 'country_name']
         for key in user_data:
             if key not in ordered_keys:
                 ordered_keys.append(key)

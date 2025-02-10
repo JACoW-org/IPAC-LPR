@@ -15,22 +15,15 @@ import datetime
 import urllib.parse
 from hashlib import md5
 
+import params
 
-#Settings
-event_id = 41
 
-if not ('api_token' in locals() or 'api_token' in globals()):
-    fname="../api_token.txt"
-    try:
-        fpwd=open(fname)
-        api_token=fpwd.readlines()[0].strip()
-        fpwd.close()
-    except:
-        print("Unable to read ",fname)
-        print("You need to create a file called api_token containing your api_token in the directory above the one where the LPR scripts are located")
-        sys.exit(1)
+event_id = params.event_id
 
-event_url="https://indico.jacow.org/event/"+str(event_id)+"/"
+api_token = params.api_token
+event_url=params.event_url
+
+
 
 #print("jacow_nd_func imported")
 Requests_timeout=20
@@ -974,7 +967,7 @@ def load_contribs(evtid=None):
         print("Contribution file did not exist...")
         file_age=999999
     #print('file_age',file_age)
-    if file_age > (24*3600):
+    if file_age > params.reload_contrib_from_online_seconds:
         print('file_age',file_age)
         use_online=True
         print("Updating contribs from online data.")
@@ -2466,10 +2459,13 @@ def find_participant_by_email(email):
         irow=irow+1
     return None
 
+
+
 maxSearch=10
 global iSearch
 iSearch=0
 def search_user(email=None,last_name=None,first_name=None,emailHash=None,verbosemode=True):
+    print('in JNF search_user')
     global iSearch
     iSearch=iSearch+1
     if iSearch>maxSearch:

@@ -19,8 +19,8 @@ import params
 parser = argparse.ArgumentParser()
 parser.add_argument("--confid", help="The conference(s) id eg: 41 or 41,95")
 parser.add_argument("--subMC", help="The subMC for which we want the map")
-parser.add_argument("--check_reviewers", action="store_true", help="Check the sub MC of each reviewer")
-parser.add_argument("--only_reviewers", action="store_true", help="Returns answers only for the members of the reviewers team")
+parser.add_argument("--check-reviewers", action="store_true", help="Check the sub MC of each reviewer")
+parser.add_argument("--only-reviewers", action="store_true", help="Returns answers only for the members of the reviewers team")
 parser.parse_args()
 args = parser.parse_args()
 #print(args)
@@ -95,7 +95,7 @@ for confid in confids:
                                         if dbid in reflist:
                                             showdata=True
                     if showdata:
-                        #print(auth_data)
+                        #print("auth_data",auth_data)
                         print(auth_type,auth_data['first_name'],auth_data['last_name'],' ',end='') 
                         if 'email' in auth_data.keys():
                             print(auth_data['email'],' ',end='')
@@ -105,14 +105,18 @@ for confid in confids:
                         #print("Papers", auth_data['papers'])
     elif args.check_reviewers:
         for theref in reflist:
-            auth_data=uf.get_user_from_db_id(theref)
+            auth_data=uf.get_user(theref)
             if auth_data is None:
                 print("No entry for db_id",theref)
             else:
+                #print("auth_data",auth_data)
+                #print("auth_data",auth_data.keys())
+                print(auth_data['first_name'],auth_data['last_name'],' ',end='') 
                 if 'email' in auth_data.keys():
-                    print(theref,auth_data['first_name'],auth_data['last_name'],auth_data['email'])
-                else:
-                    print(theref,auth_data['first_name'],auth_data['last_name'])
+                    print(auth_data['email'],' ',end='')
+                if 'country_code' in auth_data.keys():
+                    print(auth_data['country_code'],' ',end='')
+                print()
                 for auth_type in ['primaryauthors' , 'speakers' , 'coauthors' , 'submitter' ]:
                     auth_MC=[]
                     for idx in range(len(the_sub_MC_list)):

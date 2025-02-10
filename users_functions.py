@@ -16,6 +16,8 @@ import requests
 
 import params
 
+import time
+
 
 event_id = params.event_id
 
@@ -87,7 +89,21 @@ def search_user_by_id(userid):
     payload = {"values": [ "User:"+str(userid) ] }
     data = requests.post(f'https://indico.jacow.org/event/37/manage/api/principals', headers=headers, json=payload)
     if data.status_code==200:
-        return data.json()
+        #print("search_user_by_id",data.json())
+        keys=list(data.json().keys())
+        return data.json()[keys[0]]
+    else:
+        return None
+#search_user_by_id
+
+def search_and_add_users_by_id(userid_list):
+    headers = { 'Authorization': f'Bearer {api_token}'}
+    payload = {"values": [ "User:"+str(userid_list) ] }
+    data = requests.post(f'https://indico.jacow.org/event/37/manage/api/principals', headers=headers, json=payload)
+    if data.status_code==200:
+        #print("search_user_by_id",data.json())
+        keys=list(data.json().keys())
+        return data.json()[keys[0]]
     else:
         return None
 #search_user_by_id
@@ -108,7 +124,9 @@ def search_user_id(user):
                 data=search_user(last_name=user['last_name'],first_name=user['first_name'],emailHash=user['emailHash'])
     if data is not None:
         print("Id found")
-        add_user_info(user['user_id'], data)
+        print(data)
+        time.sleep(1)
+        add_user_info(user['user_id'], data)        
         save_users()
         return data['id']
     
@@ -172,7 +190,7 @@ def add_user_info(user_id,user_info,date=None):
         pass
     if 'affiliation_meta' in user_info.keys() and user_info['affiliation_meta'] is not None:
         if 'country_code' in user_info['affiliation_meta'].keys():
-            print("country:",user_info['affiliation_meta']['country_code'])
+            #print("country:",user_info['affiliation_meta']['country_code'])
             user_info['country_code']=user_info['affiliation_meta']['country_code']
         if 'country_name' in user_info['affiliation_meta'].keys():
             user_info['country_name']=user_info['affiliation_meta']['country_name']
@@ -313,10 +331,10 @@ def merge_users(userid1,userid2):
                         #users[str(userid1)][rewritten_key]=list(set(users[str(userid1)][rewritten_key]))
                     else:
                         #print("else")
-                        if not rewritten_key+"_all" in users[userid1].keys():
+                        if not rewritten_key+"_all" in users[str(userid1)].keys():
                             #if type() is list:
                             users[str(userid1)][rewritten_key+"_all"]=[]
-                            users[str(userid1)][rewritten_key+"_all"].append(users[userid1][rewritten_key])
+                            users[str(userid1)][rewritten_key+"_all"].append(users[str(userid1)][rewritten_key])
                         if type(users[str(userid2)][key]) is list:
                             for entry in users[str(userid2)][key]:
                                 users[str(userid1)][rewritten_key+"_all"].append(entry)
@@ -325,14 +343,14 @@ def merge_users(userid1,userid2):
                         #users[str(userid1)][rewritten_key+"_all"]=list(set(users[str(userid1)][rewritten_key+"_all"]))
 
             else:
-                users[userid1][rewritten_key]=users[str(userid2)][key]
-    if 'papers' not in users[userid1].keys():
-        users[userid1]['papers']=[]
+                users[str(userid1)][rewritten_key]=users[str(userid2)][key]
+    if 'papers' not in users[str(userid1)].keys():
+        users[str(userid1)]['papers']=[]
     for paper in users[userid2]['papers']:        
-        users[userid1]['papers'].append(paper)
+        users[str(userid1)]['papers'].append(paper)
     users.pop(userid2)
     users[userid2]={}
-    users[userid2]['moved_to']=userid1
+    users[userid2]['moved_to']=str(userid1)
 #end merge_users(userid1,userid2):
 
 def users_purity():

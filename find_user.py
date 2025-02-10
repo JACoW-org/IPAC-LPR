@@ -61,7 +61,7 @@ for user in list(uf.users):
             if user_data['user_id'] == user_data['emailHash']:
                 print("Matching user is not linked to repository. Checking repository for updates.")
                 uf.search_user_id(user_data)
-        ordered_keys= [ 'user_id', 'title', 'first_name', 'last_name', 'full_name', 'affiliation', 'email', 'country_code', 'country_name']
+        ordered_keys= [ 'user_id', 'title', 'first_name', 'last_name', 'full_name', 'affiliation', 'country_code', 'country_name', 'email']
         for key in user_data:
             if key not in ordered_keys:
                 ordered_keys.append(key)

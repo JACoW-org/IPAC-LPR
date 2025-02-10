@@ -98,14 +98,15 @@ def search_user_by_id(userid):
 
 def search_and_add_users_by_id(userid_list):
     headers = { 'Authorization': f'Bearer {api_token}'}
-    payload = {"values": [ "User:"+str(userid_list) ] }
+    users_list=[ "User:"+str(userid) for userid in userid_list ]
+    payload = {"values": users_list }
     data = requests.post(f'https://indico.jacow.org/event/37/manage/api/principals', headers=headers, json=payload)
     if data.status_code==200:
-        #print("search_user_by_id",data.json())
-        keys=list(data.json().keys())
-        return data.json()[keys[0]]
-    else:
-        return None
+        #print("search_and_add_users_by_id",data.json())
+        keys=list(data.json().keys())        
+        #print("keys",keys)
+        for key in keys:
+            add_user_info(data.json()[key]['user_id'],data.json()[key])
 #search_user_by_id
 
 def search_user_id(user):
@@ -242,64 +243,12 @@ def add_paper_to_user(user_id,conf_id,paper_db_id,auth_type):
 
 
 
-'''
-def get_user_from_person_id(person_id):
-    global users
-    matchid=[]
-    for userid in users.keys(): 
-        if 'person_id' in users[userid].keys():
-            if str(users[userid]['person_id'])==str(person_id):
-                 matchid.append(userid)
-        if 'person_id_all' in users[userid].keys():
-            if str(person_id) in users[userid]['person_id_all']:
-                matchid.append(userid)
-    matchid=list(set(matchid))
-    #print(matchid)
-    if len(matchid)==0:
-        print("No user match for the person id!!!", person_id,matchid)
-        return None
-    elif len(matchid)==1:
-        return users[matchid[0]]
-    else:
-        print("More than one user match the person_id!!!", person_id,matchid)
-        for uid in matchid:
-            print(users[uid])
-        #exit()
-        return users[matchid[0]]
-#end get_user_from_person_id(db_id):
-
-def get_user_from_id(db_id):
-    global users
-    matchid=[]
-    for userid in users.keys(): 
-        if 'id' in users[userid].keys():
-            if str(users[userid]['id'])==str(db_id):
-                 matchid.append(userid)
-        if 'id_all' in users[userid].keys():
-            if str(db_id) in users[userid]['id_all']:
-                matchid.append(userid)
-    matchid=list(set(matchid))
-    #print(matchid)
-    if len(matchid)==0:
-        print("No user match for the id!!!", db_id,matchid)
-        return None
-    elif len(matchid)==1:
-        return users[matchid[0]]
-    else:
-        print("More than one user match the id!!!", db_id,matchid)
-        for uid in matchid:
-            print(users[uid])
-        #exit()
-        return users[matchid[0]]
-#end get_user_from_id(db_id):
-'''
-
 
 def merge_users(userid1,userid2):
     global users
     global skip_keys
     global rewrite_keys
-    print("Merging", userid2 ,"into", userid1)
+    #print("Merging", userid2 ,"into", userid1)
     if 'moved_to' in users[userid2].keys():
         print("Already merged")
         return
@@ -442,3 +391,13 @@ def clean_users():
     
 def get_email_hash(email):
     return md5(email.encode()).hexdigest()
+
+def get_user_region(country_code):
+    if country_code in params.list_countries_EMEA:
+        return params.EMEA_CODE
+    if country_code in params.list_countries_Asia:
+        return params.ASIA_CODE
+    if country_code in params.list_countries_America:
+        return params.AMERICA_CODE
+    if country_code=='':
+        return params.REGION_UNKNOWN_CODE

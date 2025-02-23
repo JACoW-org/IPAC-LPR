@@ -408,3 +408,4 @@ def get_user_region(country_code):
         return params.AMERICAS_CODE
     if country_code=='':
         return params.REGION_UNKNOWN_CODE
+    return params.REGION_UNKNOWN_CODE

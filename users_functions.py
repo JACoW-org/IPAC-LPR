@@ -11,7 +11,6 @@ User functions
 import os
 import joblib
 from hashlib import md5
-#import jacow_nd_func as jnf
 import requests
 
 import params
@@ -390,6 +389,99 @@ def clean_users():
 def get_email_hash(email):
     return md5(email.encode()).hexdigest()
 
+
+
+def find_user(user_id=None,last_name=None,first_name=None,email=None,verbose=False):
+    import jacow_nd_func as jnf
+    load_users()
+    
+    return_array=[]
+    nmatch=0
+    for user in list(users):
+        user_data=users[user]
+        match=True
+        #print('user',user,user_data)
+        if user_id is not None:
+            if not str(user_data['user_id'])==str(user_id):
+                if 'user_id_all' in user_data.keys():
+                    if not str(user_id) in user_data['user_id_all']:
+                        match=False
+                else:
+                    match=False
+                
+        if last_name is not None:
+            if 'last_name' in user_data.keys() :
+                if not user_data['last_name'].lower()==last_name.lower():
+                    match=False
+            else:
+                match=False
+        if first_name is not None and 'first_name' in user_data.keys() :
+            if not user_data['first_name'].lower()==first_name.lower():
+                match=False
+        if email is not None:
+            if 'email' in user_data.keys() :
+                if not user_data['email'].lower()==email.lower():
+                    match=False
+            else:
+                match=False
+                
+        if match:        
+            userdict={}
+            if verbose:
+                print("*** User match")
+            if 'user_id' in user_data.keys() and 'emailHash' in user_data.keys():
+                if user_data['user_id'] == user_data['emailHash']:
+                    if verbose:
+                        print("Matching user is not linked to repository. Checking repository for updates.")
+                    search_user_id(user_data)
+            ordered_keys= [ 'user_id', 'title', 'first_name', 'last_name', 'full_name', 'affiliation', 'country_code', 'country_name', 'email']
+            for key in user_data:
+                if key not in ordered_keys:
+                    ordered_keys.append(key)
+            for key in ordered_keys:
+                if key in user_data.keys():
+                    if key not in [ 'papers']:
+                        if not key.endswith("_all"):
+                            userdict[key]=user_data[key]
+                            if verbose:
+                                print("  ", key,user_data[key])
+                            if key+"_all" in user_data.keys(): 
+                                userdict[key]=user_data[key+"_all"]
+                                if verbose:
+                                    print("      all:",user_data[key+"_all"])
+            if 'papers' in user_data.keys():
+                userdict['papers']=[]
+                for paper in user_data['papers']:
+                    conf=paper[0].replace('41','IPAC23').replace('63','IPAC24').replace('91','IPAC25').replace('95','IPAC26')
+                    userdict['papers'].append({'conf':conf , 'id': paper[1],  'role': paper[2]})
+                    if verbose:
+                        print("   Paper: conf",conf," id:",paper[1]," role:",paper[2])
+            if verbose:
+                print('=====')
+            nmatch=nmatch+1
+            return_array.append(userdict)
+    if verbose:
+        print(nmatch,"users matched out of",len(users))
+    
+    if nmatch==0:
+        #print(email)
+        if email is not None:
+            #print("jnf.email",email)
+            json_data=jnf.search_user(email=email)
+            return_array.append(json_data)
+            if verbose:
+                print(json_data)
+                print(get_email_hash(email))                
+        elif last_name is not None:
+            jnf_info=jnf.search_user(last_name=last_name)
+            return_array.append(jnf_info)
+            if verbose:
+                print(jnf_info)
+            
+    return return_array
+
+
+#### Below: country and region functions
 
     
 def user_is_not_region(user,region_code):

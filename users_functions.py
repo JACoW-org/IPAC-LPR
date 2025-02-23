@@ -26,7 +26,7 @@ event_url=params.event_url
 
 #List of all known users
 users_file=params.users_file
-affiliations_file=params.affiliations_file
+#affiliations_file=params.affiliations_file
 
 
 global skip_keys
@@ -45,11 +45,12 @@ def load_users():
     if os.path.isfile(users_file):
         users=joblib.load(users_file)
     else:
+        print("Warning: unable to load users from ",users_file)
         users={}
-    if os.path.isfile(affiliations_file):
-        affiliations=joblib.load(affiliations_file)
-    else:
-        affiliations={}
+    #if os.path.isfile(affiliations_file):
+    #    affiliations=joblib.load(affiliations_file)
+    #else:
+    #    affiliations={}
     emailHashesDict={}
 
 def save_users():
@@ -57,7 +58,7 @@ def save_users():
     global affiliations
 
     joblib.dump(users,users_file)
-    joblib.dump(affiliations,affiliations_file)
+    #joblib.dump(affiliations,affiliations_file)
 
 def get_user(db_id):
     #print('In get_user(db_id)')
@@ -136,7 +137,7 @@ def search_user_id(user):
 
 global iSearch
 iSearch=0
-def search_user(email=None,last_name=None,first_name=None,emailHash=None,verbosemode=True):
+def search_user(email=None,last_name=None,first_name=None,emailHash=None,verbosemode=True,addToUsers=True,allow_search_again=True):
     global iSearch
     iSearch=iSearch+1
     if iSearch>params.maxUserSearch:
@@ -172,7 +173,26 @@ def search_user(email=None,last_name=None,first_name=None,emailHash=None,verbose
                 print("No user found")
             return None
         else:
+            if addToUsers:
+                keys=list(data_json['users'][0].keys()) 
+                
+                if data_json['users'][0]['id'] is None or  data_json['users'][0]['id']=='None':
+                    user_id=data_json['users'][0]['identifier']
+                else:
+                    user_id=data_json['users'][0]['id']
+                #print("keys",keys)
+                add_user_info(user_id,data_json['users'][0])
+                print("user added", data_json['users'][0])
+                save_users()
+                load_users()
+                if allow_search_again:
+                    if 'email' in data_json['users'][0].keys():
+                        print('search again',data_json['users'][0]['email'])
+                        return search_user(email=data_json['users'][0]['email'],allow_search_again=False)
             return data_json['users'][0]
+        
+        
+
 #search_user
 
 
@@ -392,7 +412,7 @@ def get_email_hash(email):
 
 
 def find_user(user_id=None,last_name=None,first_name=None,email=None,verbose=False):
-    import jacow_nd_func as jnf
+    #import jacow_nd_func as jnf
     load_users()
     
     return_array=[]
@@ -460,6 +480,7 @@ def find_user(user_id=None,last_name=None,first_name=None,email=None,verbose=Fal
                 print('=====')
             nmatch=nmatch+1
             return_array.append(userdict)
+    #print(nmatch,"users matched out of",len(users))
     if verbose:
         print(nmatch,"users matched out of",len(users))
     
@@ -467,18 +488,19 @@ def find_user(user_id=None,last_name=None,first_name=None,email=None,verbose=Fal
         #print(email)
         if email is not None:
             #print("jnf.email",email)
-            json_data=jnf.search_user(email=email)
+            json_data=search_user(email=email)
             return_array.append(json_data)
             if verbose:
                 print(json_data)
                 print(get_email_hash(email))                
         elif last_name is not None:
-            jnf_info=jnf.search_user(last_name=last_name)
+            jnf_info=search_user(last_name=last_name)
             return_array.append(jnf_info)
             if verbose:
                 print(jnf_info)
             
     return return_array
+#end find_user
 
 
 #### Below: country and region functions

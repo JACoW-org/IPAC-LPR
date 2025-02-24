@@ -62,7 +62,6 @@ all_actions_todo=[]
 def printv(txt):
     print(txt," : ",eval(txt))
 
-#### Referees
 def load_referee_files():
     global max_referees
     global list_referees_wb
@@ -1248,6 +1247,7 @@ def find_new_affilation(contrib_db_id):
 
 ### Papers and contribs 
 def get_paper_info(db_id,use_cache=False,sleep_before_online=0.5):
+    print("In JNF get_paper_info use paper functions inseatd")
     filename="papers/paper_"+str(db_id)+".json"
     use_online=True
     if use_cache:

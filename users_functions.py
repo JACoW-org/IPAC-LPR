@@ -3,7 +3,7 @@
 """
 Created on Thu Feb  6 15:17:29 2025
 
-User functions
+User functions for indico/jacow
 
 @author: delerue
 """
@@ -30,9 +30,9 @@ users_file=params.users_file
 
 
 global skip_keys
-skip_keys=[ 'affiliation_meta' , '_type' ,  '_fossil' , 'avatar_url' ]
+skip_keys=[ 'affiliation_meta' , '_type' ,  '_fossil' , 'avatar_url' , 'author_type', 'is_speaker' ]
 global rewrite_keys
-rewrite_keys={ 'id': 'db_id' , 'fullName' : 'full_name' }
+rewrite_keys={ 'id': 'db_id' , 'fullName' : 'full_name' , 'email_hash': 'emailHash' }
 #rewrite_keys={  }
 global users
 global affiliations
@@ -267,7 +267,7 @@ def merge_users(userid1,userid2):
     global rewrite_keys
     #print("Merging", userid2 ,"into", userid1)
     if 'moved_to' in users[userid2].keys():
-        print("Already merged")
+        #print("Already merged")
         return
     if str(userid1) not in users.keys():
         userid1=str(userid1)
@@ -472,8 +472,9 @@ def find_user(user_id=None,last_name=None,first_name=None,email=None,verbose=Fal
             if 'papers' in user_data.keys():
                 userdict['papers']=[]
                 for paper in user_data['papers']:
-                    conf=paper[0].replace('41','IPAC23').replace('63','IPAC24').replace('91','IPAC25').replace('95','IPAC26')
-                    userdict['papers'].append({'conf':conf , 'id': paper[1],  'role': paper[2]})
+                    conf_id=paper[0]
+                    conf=paper[0].replace('41','IPAC23').replace('63','IPAC24').replace('81','IPAC25').replace('95','IPAC26')
+                    userdict['papers'].append({'conf':conf , "conf-id":conf_id,'id': paper[1],  'role': paper[2]})
                     if verbose:
                         print("   Paper: conf",conf," id:",paper[1]," role:",paper[2])
             if verbose:

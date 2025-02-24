@@ -8,12 +8,13 @@ Creates a map of all the authors, speakers and co-authors by subMC for he given 
 @author: delerue
 """
 
+import params
 import jacow_nd_func as jnf
-import argparse
+import argparse,sys
 #import numpy as np
 import joblib
 import users_functions as uf
-
+import papers_functions as pf
 
 #import time
 
@@ -24,8 +25,7 @@ args = parser.parse_args()
 #print(args)
 
 if args.confid is None:
-    args.confid=jnf.event_id
-
+    args.confid=str(params.event_id)
 
 if (args.confid.find(",")>0):
     confids=args.confid.split(",")
@@ -47,6 +47,8 @@ for confid in confids:
     all_authors_by_sub_MC_submitters=[]
     contribs=jnf.submitted_contribs(confid)
     for contrib in json_contribs["results"][0]['contributions']:
+        print(".",end='')       
+        sys.stdout.flush()
         if (contrib['track'] is not None):
             spacePos=contrib['track'][0:7].find(' ')
             if spacePos>0:
@@ -63,7 +65,7 @@ for confid in confids:
                 #print(the_sub_MC_list)
             idx=the_sub_MC_list.index(subTrackName)
             #print('Contrib id',contrib['id'],' db_id',contrib['db_id'])
-            the_paper=jnf.get_paper_info(str(contrib['db_id']),use_cache=True)
+            the_paper=pf.get_paper_info(str(contrib['db_id']),event_id=confid,use_cache=True,file_age_to_renew=-1)
             if (the_paper is not None):
                 #print(the_paper['last_revision']['submitter'])
                 #print(the_paper['last_revision']['submitter']['id'])
@@ -71,10 +73,37 @@ for confid in confids:
                 uf.add_user_info(str(the_paper['last_revision']['submitter']['id']),the_paper['last_revision']['submitter'])
                 uf.add_paper_to_user(str(the_paper['last_revision']['submitter']['id']),confid,str(contrib['db_id']),"submitter")
                 all_authors_by_sub_MC_submitters[idx].append(str(the_paper['last_revision']['submitter']['id']))   
-                if (the_paper['last_revision']['submitter']['last_name']).lower()=='delerue':
-                    print("sub:", the_paper['last_revision']['submitter'],the_paper['last_revision']['submitter'].keys(),"subm")
+                #if (the_paper['last_revision']['submitter']['last_name']).lower()=='delerue':
+                    #print("sub:", the_paper['last_revision']['submitter'],the_paper['last_revision']['submitter'].keys(),"subm")
                     #else:
                     #print("sub name: ", the_paper['last_revision']['submitter']['last_name'])                      
+            the_contrib=pf.get_contrib_info(str(contrib['db_id']),event_id=confid,use_cache=True,file_age_to_renew=-1)
+            if (the_contrib is not None):
+                for theperson in the_contrib['persons']:
+                    userid=uf.get_user_id(theperson['email_hash'])
+                    uf.add_user_info(userid,theperson)
+                    if theperson['is_speaker']:
+                        uf.add_paper_to_user(userid,confid,str(contrib['db_id']),'speakers')
+                        all_authors_by_sub_MC_speakers[idx].append(userid)                        
+                    if theperson['author_type']=='primary':
+                        auth_type='primaryauthors'
+                    elif theperson['author_type']=='secondary':
+                        auth_type='coauthors'
+                    elif theperson['author_type'] is None or theperson['author_type']=='none':
+                        auth_type=None
+                    else:
+                        print("theperson['author_type']", theperson['author_type'],": case unknown in the map")
+                        print(theperson)
+                        exit()
+                    if auth_type is not None:
+                        uf.add_paper_to_user(userid,confid,str(contrib['db_id']),auth_type)
+                        if auth_type == 'coauthors': 
+                            all_authors_by_sub_MC_coauthors[idx].append(userid)
+                        elif auth_type == 'speakers': 
+                            all_authors_by_sub_MC_speakers[idx].append(userid)
+                        else:
+                            all_authors_by_sub_MC[idx].append(userid)
+
             for auth_type in ['speakers' , 'primaryauthors' ,'coauthors' ]:
                 for speak in contrib[auth_type]:
                     #print('speak',speak)
@@ -102,9 +131,12 @@ for confid in confids:
     print("**** MC map: *****")
     print('the_sub_MC_list')
     print(the_sub_MC_list)
-    print('all_authors_by_sub_MC')
-    print(all_authors_by_sub_MC)
+    #print('all_authors_by_sub_MC')
+    #print(all_authors_by_sub_MC)
     joblib.dump([the_sub_MC_list,all_authors_by_sub_MC,all_authors_by_sub_MC_speakers,all_authors_by_sub_MC_coauthors,all_authors_by_sub_MC_submitters],authors_map_fname)
+#Adding reviewers to database
+reflist=jnf.get_referees_list()
+uf.search_and_add_users_by_id(reflist)
 uf.save_users()
 uf.clean_users()
 uf.users_purity()

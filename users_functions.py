@@ -17,6 +17,8 @@ import params
 
 import time
 
+import indico_functions as indf
+
 
 event_id = params.event_id
 
@@ -155,7 +157,7 @@ def search_user(email=None,last_name=None,first_name=None,emailHash=None,verbose
                 data = requests.get(f'https://indico.jacow.org/user/search/?last_name={last_name}&external=true', headers=headers)
 
         if not data.status_code == 200:
-            print("Error searching for user")
+            print("Error searching for user",email,last_name,first_name,emailHash)
             return None
         data_json=data.json()
         if len(data_json['users'])>1:
@@ -407,12 +409,16 @@ def clean_users():
 #end def clean_users():
     
 def get_email_hash(email):
-    return md5(email.encode()).hexdigest()
-
+    #print('email', email)
+    if email is not None:
+        return md5(email.encode()).hexdigest()
+    else:
+        return None
 
 
 def find_user(user_id=None,last_name=None,first_name=None,email=None,verbose=False):
     #import jacow_nd_func as jnf
+    #print('in uf find user','email=', email)
     load_users()
     
     return_array=[]
@@ -422,7 +428,9 @@ def find_user(user_id=None,last_name=None,first_name=None,email=None,verbose=Fal
         match=True
         #print('user',user,user_data)
         if user_id is not None:
-            if not str(user_data['user_id'])==str(user_id):
+            if not 'user_id' in user_data:
+                match=False
+            elif not str(user_data['user_id'])==str(user_id):
                 if 'user_id_all' in user_data.keys():
                     if not str(user_id) in user_data['user_id_all']:
                         match=False
@@ -466,7 +474,7 @@ def find_user(user_id=None,last_name=None,first_name=None,email=None,verbose=Fal
                             if verbose:
                                 print("  ", key,user_data[key])
                             if key+"_all" in user_data.keys(): 
-                                userdict[key]=user_data[key+"_all"]
+                                userdict[key+"_all"]=user_data[key+"_all"]
                                 if verbose:
                                     print("      all:",user_data[key+"_all"])
             if 'papers' in user_data.keys():
@@ -486,6 +494,7 @@ def find_user(user_id=None,last_name=None,first_name=None,email=None,verbose=Fal
         print(nmatch,"users matched out of",len(users))
     
     if nmatch==0:
+        print('no match in find_user for ','user_id=',user_id,'last_name=',last_name,'first_name=',first_name,'email=',email)
         #print(email)
         if email is not None:
             #print("jnf.email",email)
@@ -524,3 +533,55 @@ def get_user_region(country_code):
     if country_code=='':
         return params.REGION_UNKNOWN_CODE
     return params.REGION_UNKNOWN_CODE
+
+### Roles management
+
+roles={}
+
+def load_roles(confid=None):    
+    if confid is not None:
+        headers = {'Authorization': f'Bearer {params.api_token}'}
+        conf_roles = indf.indico_get(f'https://indico.jacow.org/event/{confid}/manage/roles/api/roles/' ,datatype='json',headers=headers)
+        roles[confid]={}
+        roles[confid]['roles']=conf_roles
+        all_emails=[]
+        all_userid=[]        
+        for role in conf_roles:
+            #print(role['name'])
+            for member in role['members']:
+                all_emails.append(member['email'])
+                all_userid.append(member['id'])
+        roles[confid]['emails']=all_emails
+        roles[confid]['user_ids']=all_userid
+        
+            
+def has_role(email=None,userid=None,confid=None):
+    if confid is None:
+        return None
+    if email is None and userid is None:
+        return None
+    if not confid in roles.keys():
+        load_roles(confid=confid)
+    if not confid in roles.keys():
+        return None
+    if email is not None:
+        if email in roles[confid]['emails']:
+            member_roles=[]
+            for role in roles[confid]['roles']:
+                #print(role['name'])
+                for member in role['members']:
+                    if email == member['email']:
+                        member_roles.append({ 'code': role['code'], 'name': role['name']})                    
+        return member_roles
+    if userid is not None:
+        if userid in roles[confid]['user_ids']:
+            member_roles=[]
+            for role in roles[confid]['roles']:
+                #print(role['name'])
+                for member in role['members']:
+                    if userid == member['id']:
+                        member_roles.append({ 'code': role['code'], 'name': role['name']})                    
+        return member_roles
+    return None
+    
+    

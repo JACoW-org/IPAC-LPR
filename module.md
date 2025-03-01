@@ -1,4 +1,4 @@
-#### Setting up Light Peer Review at IPAC
+### Setting up Light Peer Review at IPAC
 
 1. Go to the indico site of the IPAC for which you want to set-up LPR (typically <https://indico.jacow.org/e/IPACyy> ) where yy is the year of that IPAC.
 

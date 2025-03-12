@@ -416,7 +416,8 @@ def get_email_hash(email):
         return None
 
 
-def find_user(user_id=None,last_name=None,first_name=None,email=None,verbose=False):
+def find_user(user_id=None,last_name=None,first_name=None,email=None,verbose=False,force_search=False):
+    #,show_full_affiliation=False
     #import jacow_nd_func as jnf
     #print('in uf find user','email=', email)
     load_users()
@@ -463,6 +464,10 @@ def find_user(user_id=None,last_name=None,first_name=None,email=None,verbose=Fal
                         print("Matching user is not linked to repository. Checking repository for updates.")
                     search_user_id(user_data)
             ordered_keys= [ 'user_id', 'title', 'first_name', 'last_name', 'full_name', 'affiliation', 'country_code', 'country_name', 'email']
+            #print("show_full_affiliation",show_full_affiliation)
+            #if show_full_affiliation:
+            #    ordered_keys.append('affiliation_meta')
+            #    print(user_data)
             for key in user_data:
                 if key not in ordered_keys:
                     ordered_keys.append(key)
@@ -493,8 +498,11 @@ def find_user(user_id=None,last_name=None,first_name=None,email=None,verbose=Fal
     if verbose:
         print(nmatch,"users matched out of",len(users))
     
-    if nmatch==0:
-        print('no match in find_user for ','user_id=',user_id,'last_name=',last_name,'first_name=',first_name,'email=',email)
+    if nmatch==0 or force_search:
+        if nmatch==0:
+            print('no match in find_user for ','user_id=',user_id,'last_name=',last_name,'first_name=',first_name,'email=',email)
+        if force_search:            
+            print("Search forced, email=",email,"last_name", last_name)
         #print(email)
         if email is not None:
             #print("jnf.email",email)
@@ -557,31 +565,36 @@ def load_roles(confid=None):
             
 def has_role(email=None,userid=None,confid=None):
     if confid is None:
-        return None
+        confid=params.event_id
     if email is None and userid is None:
         return None
     if not confid in roles.keys():
         load_roles(confid=confid)
     if not confid in roles.keys():
         return None
+    member_roles=[]
     if email is not None:
         if email in roles[confid]['emails']:
-            member_roles=[]
             for role in roles[confid]['roles']:
                 #print(role['name'])
                 for member in role['members']:
                     if email == member['email']:
                         member_roles.append({ 'code': role['code'], 'name': role['name']})                    
-        return member_roles
     if userid is not None:
         if userid in roles[confid]['user_ids']:
-            member_roles=[]
             for role in roles[confid]['roles']:
                 #print(role['name'])
                 for member in role['members']:
                     if userid == member['id']:
                         member_roles.append({ 'code': role['code'], 'name': role['name']})                    
-        return member_roles
-    return None
+    return member_roles
     
+def has_role_codes(email=None,userid=None,confid=None,only_codes=None):
+    member_roles=has_role(email,userid,confid)
+    if only_codes is not None:
+        theroles=[  role['code']  for role in member_roles if role['code'] in only_codes ]
+    else:
+        theroles=[  role['code']  for role in member_roles ]
+    return list(set(theroles))
+
     

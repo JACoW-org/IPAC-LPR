@@ -72,3 +72,15 @@ def get_paper_contrib_info(db_id,event_id=None,use_cache=False,file_age_to_renew
             return None
         else:
             return data_json
+
+def get_conf_from_id(confid):
+    if confid=="41":
+        return "IPAC'23"
+    if confid=="63":
+        return "IPAC'24"
+    if confid=="81":
+        return "IPAC'25"
+    if confid=="95":
+        return "IPAC'26"
+
+

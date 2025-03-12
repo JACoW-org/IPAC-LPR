@@ -1,0 +1,63 @@
+
+  </tbody>
+</table></div>
+</body>
+
+<script>
+
+</script>
+<script>
+document.onreadystatechange = function () {
+
+    if (document.readyState == "complete") {
+    event_id='95'
+    vote_colum=10
+
+    //User id
+    document.getElementById('info').innerText = 'Search user id';
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4){
+            //console.log(this.status);
+            document.getElementById('info').innerText = "Status "+this.status;
+            if (this.status == 200) {
+               // Typical action to be performed when the document is ready:
+               document.getElementById('userid').innerText = xhttp.responseText;
+               //console.log(xhttp.responseText);
+               var data = JSON.parse(this.responseText);
+               //console.log(data);
+               //console.log(data.last_name);
+               document.getElementById('user_name').innerText = data.first_name +" "+data.last_name;
+               document.getElementById('userid').innerText ="";
+               document.getElementById('info').innerText ="";
+           }//status
+        }//readyState
+    };
+    xhttp.timeout = function() {
+            //console.log("timeout");
+            document.getElementById('info').innerText = "Timeout ";
+    };
+    //xhttp.open("GET", "/api/user/", true);
+    //xhttp.open("GET", "https://indico.cern.ch/api/user/", true);
+    xhttp.open("GET", "/api/user/", true);
+    xhttp.send();
+
+
+    abtracts_base_url="https://indico.jacow.org/event/"+event_id+"/abstracts/";
+    
+    
+    var dataTable = document.getElementById("orals");
+    var cells = dataTable.querySelectorAll("tr");
+    for (var irow = 1; irow < cells.length; irow++){
+        abstract_id= cells[irow].cells[0].childNodes[0].data.trim();
+        document.getElementById('info').innerText = "Loading "+cells[irow].cells[0].childNodes[0].data.trim();
+        cells[irow].cells[vote_colum].innerHTML="<A HREF='https://indico.jacow.org/event/100/attachments/775/2951/vote_on_abstracts.html'>Vote</A>";
+    } //for each abstract
+    document.getElementById('loader').innerText = "";
+
+} //loading complete
+} //function
+document.getElementById('loader').innerText = "";
+</script>
+
+</html>

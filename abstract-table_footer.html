@@ -1,0 +1,63 @@
+
+  </tbody>
+</table></div>
+</body>
+<script>
+document.getElementById('info').innerText = "Loading...";
+document.onreadystatechange = function () {
+    if (document.readyState == "complete") {
+    event_id='95'
+    vote_colum=10
+    abtracts_base_url="https://indico.jacow.org/event/"+event_id+"/abstracts/";
+    
+    
+    var dataTable = document.getElementById("orals");
+    var cells = dataTable.querySelectorAll("tr");
+    for (var irow = 1; irow < cells.length; irow++){
+        abstract_id= cells[irow].cells[0].childNodes[0].data.trim();
+        document.getElementById('info').innerText = "Loading "+cells[irow].cells[0].childNodes[0].data.trim();
+        var abstract_http = new XMLHttpRequest();
+        abstract_http.onreadystatechange = function() {
+            if (this.readyState == 4){
+                document.getElementById('info').innerText = "Abstract "+abstract_id+" status "+this.status;
+                if (this.status == 200) {
+                   //Checking priorities
+                   fpriorPos=abstract_http.responseText.indexOf("First Priority");
+                   //console.log(fpriorPos);
+                   if (fpriorPos>0){
+                   first_priority=abstract_http.responseText.substring(fpriorPos+170,fpriorPos+170+180).trim();
+                   } else {
+                   first_priority="--";
+                   }
+                   spriorPos=abstract_http.responseText.indexOf("Second Priority");
+                   //console.log(spriorPos);
+                   if (spriorPos>0){
+                   second_priority=abstract_http.responseText.substring(spriorPos+170,spriorPos+170+180).trim();
+                   } else {
+                   second_priority="--";
+                   }
+                   cells[irow].cells[vote_colum].childNodes[0].data=first_priority+" "+second_priority;
+               }//status
+            }//readyState
+            document.getElementById('info').innerText = "";        
+        }; //function
+    abstract_http.timeout = function() {
+            console.log("timeout");
+            document.getElementById('info').innerText = "Timeout ";
+    };
+    
+        //console.log(abstract_id);
+        abstract_url=abtracts_base_url+abstract_id+"/";
+        //console.log(abstract_url);
+        abstract_http.open("GET", abstract_url, false);
+        abstract_http.send();
+        //console.log("done");
+    } //for each abstract
+    document.getElementById('loader').innerText = "";
+
+} //loading complete
+} //function
+</script>
+
+        
+</html>

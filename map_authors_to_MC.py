@@ -44,14 +44,15 @@ for confid in confids:
 
     authors_map_fname=f'data/all_authors_by_subMC_for_conf_{confid}.data'
     #print(len(json_contribs["results"]))
-    print("Loading contribution from conf id",confid,":", json_contribs["results"][0]["title"])
     the_sub_MC_list=[]
     all_authors_by_sub_MC=[]
     all_authors_by_sub_MC_speakers=[]
     all_authors_by_sub_MC_coauthors=[]
     all_authors_by_sub_MC_submitters=[]
-    contribs=jnf.submitted_contribs(confid)
-    for contrib in json_contribs["results"][0]['contributions']:
+    #contribs=jnf.submitted_contribs(confid)
+    contribs=jnf.load_contribs(confid)
+    print("Loading contribution from conf id",confid,":", contribs["results"][0]["title"])
+    for contrib in contribs["results"][0]['contributions']:
         print(".",end='')       
         sys.stdout.flush()
         keep_contrib=True
@@ -175,9 +176,6 @@ uf.save_users()
 if args.create_orals_page:
     print(" *** Creating orals page. ***")
     print(len(all_oral_speakers)," speakers found.")
-    orals_page_name="IPAC_past_orals.html"
-    orals_page_header="sort-table_header.html"
-    orals_page_footer="sort-table_footer.html"
 
     oral_page=open(orals_page_name,"w")
     opr=open(orals_page_header,"r")
@@ -230,10 +228,10 @@ if args.create_orals_page:
                 if person['last_name']==speaker_data['last_name']:
                     if speaker_found:
                         print("Multiple speakers found")
-                    oral_page.write("<tr>\n")                
+                    oral_page.write('<tr style="border: 1px solid black;" >\n')                
                     for txt in [ person["first_name"],person["last_name"],person["affiliation"],contrib_track,contrib_type,the_contrib["title"],pf.get_conf_from_id(speaker['conf_id']) , contrib_url ]:
                         print(txt,end=' ')
-                        oral_page.write("<td>\n")
+                        oral_page.write('<td style="border: 1px solid black;">\n')
                         oral_page.write(txt+"\n")
                         oral_page.write("</td>\n")
                     oral_page.write("</tr>\n")

@@ -1,0 +1,364 @@
+
+  </tbody>
+</table></div>
+
+</body>
+
+<script>
+event_id='95';
+
+
+//functions
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+var abstracts_ids = new Map();
+abstract_id_column=0;
+MC_column=2;
+vote_column=10;
+mc_vote_column=11;
+user_last_name="";
+user_first_name="";
+
+var voteTable = document.getElementById("votes");
+var cellsVote = voteTable.querySelectorAll("tr");
+for (icol=1;icol<9;icol++){
+    cellsVote[0].cells[icol].innerText ="MC"+icol;
+
+ } // for icol
+
+var dataTable = document.getElementById("orals");
+var cells = dataTable.querySelectorAll("tr");    
+
+document.getElementById('info').innerText = "Loading...";
+dataTable = document.getElementById("orals");
+cells = dataTable.querySelectorAll("tr");    
+
+//User id
+document.getElementById('info').innerText = 'Search user id';
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4){
+        //console.log(this.status);
+        document.getElementById('info').innerText = "Status "+this.status;
+        if (this.status == 200) {
+           // Typical action to be performed when the document is ready:
+           document.getElementById('userid').innerText = xhttp.responseText;
+           var data = JSON.parse(this.responseText);
+           document.getElementById('user_name').innerText = data.first_name +" "+data.last_name;
+           document.getElementById('userid').innerText ="";
+           document.getElementById('info').innerText ="";
+           user_last_name=data.last_name;
+           user_first_name=data.first_name;
+       }//status
+    }//readyState
+};
+xhttp.timeout = function() {
+        //console.log("timeout");
+        document.getElementById('info').innerText = "Timeout ";
+};
+xhttp.open("GET", "/api/user/", true);
+xhttp.send();
+
+//Load the abstracts
+abtracts_base_url="https://indico.jacow.org/event/"+event_id+"/abstracts/"; 
+for (var irow = 1; irow < cells.length; irow++){
+    abstract_id= cells[irow].cells[0].childNodes[0].data.trim();
+    abstract_url=abtracts_base_url+abstract_id+"/";
+    abstracts_ids.set(abstract_url,irow);
+    update_abstract(abstract_url);
+} //for each abstract
+recreate_abstract_dict();
+document.getElementById('loader').innerText = "";
+
+
+document.onreadystatechange = function () {
+    if (document.readyState == "complete") {
+        document.getElementById('loader').innerText = "Loaded";
+        sleep(5000).then(() => { check_unloaded_abstracts() });
+        sleep(10000).then(() => { check_unloaded_abstracts() });
+        sleep(15000).then(() => { check_unloaded_abstracts() });
+    } //loading complete
+} //document.onreadystatechange
+
+function recreate_abstract_dict(){
+    abstracts_ids = new Map();
+    dataTable = document.getElementById("orals");
+    cells = dataTable.querySelectorAll("tr");
+    for (var irow = 1; irow < cells.length; irow++){
+        abstract_id= cells[irow].cells[0].childNodes[0].data.trim();
+        abstract_url=abtracts_base_url+abstract_id+"/";
+        abstracts_ids.set(abstract_url,irow);
+    } //for each abstract
+    
+} //recreate_abstract_dict
+
+function color_abstract(theabstract,thecolor){    
+    var irow=abstracts_ids.get(theabstract);
+    //console.log(theabstract,irow);
+    //console.log(cells.length);
+    //console.log(cells[irow].cells.length);
+    for (icol=0;icol<cells[irow].cells.length;icol++){
+         cells[irow].cells[icol].style.backgroundColor=thecolor;
+    } //for each col
+}//color_abstract
+
+
+function update_abstract(abstract_url){
+            //console.log("update_abstract "+abstract_url)
+            document.getElementById('info').innerText = "Loading "+abstract_url;
+            color_abstract(abstract_url, '#82E0AA')
+            var abstract_http = new XMLHttpRequest();
+            abstract_http.onreadystatechange = function() {
+                var dataTable = document.getElementById("orals");
+                var cells = dataTable.querySelectorAll("tr");
+                var irow=abstracts_ids.get(this.responseURL);
+                //console.log(abstracts_ids);
+                //console.log(this.responseURL);
+                //console.log(irow);
+                if (this.readyState == 4){
+                    document.getElementById('info').innerText = "Abstract "+abstract_id+" status "+this.status+" irow="+irow;
+                    if (this.status == 200) {
+                        priority_vote=9;
+                        review_code='';
+                        idx_proposal_review=1;
+                        csrf_token='';
+                        idx_proposal_review=this.responseText.indexOf('id="proposal-review-',idx_proposal_review+1);
+                        track_code_pos_start=this.responseText.indexOf("/review/track/");
+                        if (track_code_pos_start>0){
+                            track_code_pos_end=this.responseText.indexOf('"',track_code_pos_start);
+                            track_code=this.responseText.substring(track_code_pos_start+7,track_code_pos_end);
+                        } else {
+                            track_code="Track code unknown";
+                        } //(idx_proposal_review<0)
+                       review_code=track_code                        
+                       while(idx_proposal_review>0){
+                            review_code_pos_start=idx_proposal_review+4;
+                            review_code_pos_end=this.responseText.indexOf('"',review_code_pos_start);
+                            the_review_code=this.responseText.substring(review_code_pos_start+16,review_code_pos_end);
+                            //console.log(the_review_code_pos_start);
+                            idx_proposer_start= this.responseText.indexOf('<strong>',idx_proposal_review);
+                            idx_proposer_end= this.responseText.indexOf('</strong>',idx_proposer_start);
+                            proposer_txt=this.responseText.substring(idx_proposer_start+8,idx_proposer_end);                            
+                            action_txt=this.responseText.substring(idx_proposer_end+17,idx_proposer_end+30);
+                            //console.log(proposer_txt,this.responseURL,action_txt);
+                            //console.log(this.responseText.substring(idx_proposer_end,idx_proposer_end+100));
+                            //console.log(action_txt.indexOf("review"),proposer_txt.indexOf(user_last_name),proposer_txt.indexOf(user_first_name));
+                            if ((action_txt.indexOf("review")>=0)&&(proposer_txt.indexOf(user_last_name)>=0)&&(proposer_txt.indexOf(user_first_name)>=0)){
+                                review_code=the_review_code
+                                //Checking priorities
+                                fpriorPos=this.responseText.indexOf("First Priority",idx_proposer_end);
+                                //console.log(fpriorPos);
+                                if (fpriorPos>0){                       
+                                    first_priority_txt=this.responseText.substring(fpriorPos+170,fpriorPos+170+180).trim();
+                                    if (first_priority_txt== "Yes"){
+                                        priority_vote=1;
+                                    } else {
+                                        if (!(first_priority_txt== "No")){
+                                            console.log("1st priority not understood:"+first_priority_txt)
+                                        }
+                                    }
+                                    spriorPos=this.responseText.indexOf("Second Priority");
+                                    //console.log(spriorPos);
+                                    if (spriorPos>0){
+                                        second_priority_txt=this.responseText.substring(spriorPos+170,spriorPos+170+180).trim();
+                                        if (second_priority_txt== "Yes"){
+                                            priority_vote=2;
+                                        } else {
+                                            if (!(second_priority_txt== "No")){
+                                                console.log("2nd priority not understood:"+second_priority_txt)
+                                            }
+                                        }
+                                    } //second_priority_txt extract
+                                } //first_priority_txt extract
+                             } // left review and same user
+                             idx_proposal_review=this.responseText.indexOf('id="proposal-review-',idx_proposal_review+1);
+                        } // while proposal>0      
+                        //console.log("priority_vote",priority_vote)                       
+                       
+                        csrf_pos_start=this.responseText.indexOf("csrf_token");
+                        csrf_pos_start=this.responseText.indexOf("value",csrf_pos_start);
+                        csrf_pos_end=this.responseText.indexOf(">",csrf_pos_start);
+                        csrf_token=this.responseText.substring(csrf_pos_start+7,csrf_pos_end-1);
+                        track_id_start=this.responseText.indexOf("question-list-");
+                        if (track_id_start>0){ 
+                            track_id_end=this.responseText.indexOf('"',track_id_start);
+                            track_id=this.responseText.substring(track_id_start+14,track_id_end);
+                        } else {
+                            track_id=-1;
+                        }
+                        //console.log("track_id", track_id);
+                        //console.log("csrf_token", csrf_token);
+                        //console.log("review_code", review_code);
+                        //console.log("track_code", track_code);
+                        btn_txt="<form>";
+                        mc_vote_col=cells[irow].cells[MC_column].innerText.trim();
+                        if (priority_vote==1){
+                            btn_txt=btn_txt+"<div name='vote' value='1'></div>";
+                            btn_txt=btn_txt+"<b>1st choice</b>"; 
+                            mc_vote_col=mc_vote_col+" 1st";
+                        } else if (priority_vote==2){
+                            btn_txt=btn_txt+"<div name='vote' value='2'></div>";
+                            btn_txt=btn_txt+"2nd choice"; 
+                            mc_vote_col=mc_vote_col+" 2nd";
+                        } else {
+                            btn_txt=btn_txt+"Not chosen";
+                            btn_txt=btn_txt+"<div name='vote' value='3'></div>";
+                            mc_vote_col="~"+mc_vote_col+" ";
+                        }
+                        if (!(priority_vote==1)){
+                            btn_txt=btn_txt+"<button type=button onClick='vote(1,"+'"'+this.responseURL+'"'+',"'+review_code+'"'+',"'+csrf_token+'"'+',"'+track_id+'"'+")'>Vote 1st</button>";
+                        } 
+                        if (!(priority_vote==2)){
+                            btn_txt=btn_txt+"<button type=button onClick='vote(2,"+'"'+this.responseURL+'"'+',"'+review_code+'"'+',"'+csrf_token+'"'+',"'+track_id+'"'+")'>Vote 2nd</button>";
+                        } 
+                        if ((priority_vote==1)||(priority_vote==2)){
+                            btn_txt=btn_txt+"<button type=button onClick='vote(9,"+'"'+this.responseURL+'"'+',"'+review_code+'"'+',"'+csrf_token+'"'+',"'+track_id+'"'+")'>Cancel vote</button>";
+                        } 
+                        for (icol=0;icol<cells[irow].cells.length;icol++){
+                             if (priority_vote==1) {
+                                 color_abstract(this.responseURL, '#c39bd3');
+                             } else if (priority_vote==2) {
+                                 color_abstract(this.responseURL, '#a9cce3');
+                             } else {
+                                 if (irow%2==0){
+                                     color_abstract(this.responseURL, '#fefefe');
+                                 } else {
+                                     color_abstract(this.responseURL, '#dadada');
+                                 }
+                             }
+                         }
+                        //btn_txt=btn_txt+"</form>"+"track id:"+track_id+"track_code"+track_code+"review_code"+review_code; 
+                        btn_txt=btn_txt; 
+                        //console.log(btn_txt);
+                        cells[irow].cells[vote_column].innerHTML=btn_txt;
+                        cells[irow].cells[mc_vote_column].innerHTML=mc_vote_col;
+                        //console.log(mc_vote_col);
+                       //get the abstract
+                       /*
+                       //Not yet implemented
+                       abstract_start=this.responseText.indexOf("abstract-content");
+                       if (abstract_start>0){
+                            abstract_start=this.responseText.indexOf('<p>',abstract_start);
+                            abstract_end=this.responseText.indexOf('</p>',abstract_end);
+                            abstract_txt=this.responseText.substring(abstract_start+2,abstract_end);
+                        } else {
+                            abstract_txt="";
+                        } 
+                        */
+                   }//status == 200
+                   else {
+                       cells[irow].cells[vote_column].innerHTML="???";
+                       console.log("Abtract status:",this.status,this.responseURL) 
+                   }
+
+                   sleep(500).then(() => { count_votes(); });
+               }//readyState
+                document.getElementById('info').innerText = "";        
+            }; //function
+            abstract_http.timeout = function() {
+                    console.log("timeout");
+                    document.getElementById('info').innerText = "Timeout on "+this.responseURL;
+            };
+            
+            //console.log(abstract_id);
+            //console.log(abstract_url);
+            abstract_http.open("GET", abstract_url, true);
+            abstract_http.send();
+            //console.log("done");
+            
+}//function update_abstract
+
+function count_votes(){
+            var dataTable = document.getElementById("orals");
+            var cells = dataTable.querySelectorAll("tr");
+            //for each row
+            firstVotes=new Array(8);
+            secondVotes=new Array(8);
+            for (var imc = 0; imc < 8; imc++){
+                firstVotes[imc]=0;
+                secondVotes[imc]=0;
+            }
+            for (var irow = 1; irow < cells.length; irow++){
+                MCval=parseInt(cells[irow].cells[MC_column].innerText.substring(2));
+                if (cells[irow].cells[vote_column].childNodes[0].nodeType==1){
+                    //console.log("Nodetype OK");
+                    //console.log(cells[irow].cells[vote_column].childNodes[0].childNodes[0]);
+                    if (cells[irow].cells[vote_column].childNodes[0].childNodes[0].nodeType==1){
+                        if (cells[irow].cells[vote_column].childNodes[0].childNodes[0].attributes.length>1){
+                            //console.log(cells[irow].cells[vote_column].childNodes[0].childNodes[0].attributes);
+                            //console.log(parseInt(cells[irow].cells[vote_column].childNodes[0].childNodes[0].attributes[1].nodeValue));
+                            vote_value=parseInt(cells[irow].cells[vote_column].childNodes[0].childNodes[0].attributes[1].nodeValue);
+                            if (vote_value==1){
+                                firstVotes[MCval-1]=firstVotes[MCval-1]+1;
+                            }
+                            if (vote_value==2){
+                                secondVotes[MCval-1]=secondVotes[MCval-1]+1;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            var first_choices_row=document.getElementById('votes').querySelectorAll("tr")[1];
+            var second_choices_row=document.getElementById('votes').querySelectorAll("tr")[2];
+            for (var imc = 0; imc < 8; imc++){
+                first_choices_row.cells[imc+1].innerText =firstVotes[imc];
+                second_choices_row.cells[imc+1].innerText =secondVotes[imc];
+            }
+}//count_votes
+
+function vote(value,url,review_code,token,track_id){
+    console.log("voting",url);
+    color_abstract(url, '#F7DC6F')    ;
+    var vote_request = new XMLHttpRequest();
+    vote_request.onreadystatechange = function() {
+        if (this.readyState == 4){
+            //console.log(this.status);
+            //document.getElementById('info').innerText = "Status "+this.status;
+            if (this.status == 200) {
+               // Typical action to be performed when the document is ready:
+               document.getElementById('info').innerText = "Vote recorded";               
+               update_abstract(url);
+               
+           }//status
+        }//readyState
+    };
+    if (review_code.startsWith("/track")){
+        query_url=url+"review"+String(review_code)
+        track_id=review_code.substring(7)
+    } else {
+        query_url=url+"reviews/"+String(review_code)+"/edit";
+    }
+    //console.log(query_url);
+    //post_data="track-"+track_id+"-csrf_token=025b2a88-7905-44c3-9ebc-be6926ef4ecc&track-"+track_id+"-question_67=1&track-"+track_id+"-question_68=0&track-"+track_id+"-contribution_type=__None&track-"+track_id+"-proposed_action=accept&track-"+track_id+"-comment=";
+    if (value==1){
+        post_data="track-"+track_id+"-csrf_token="+token+"&track-"+track_id+"-question_67=1&track-"+track_id+"-question_68=0&track-"+track_id+"-contribution_type=__None&track-"+track_id+"-proposed_action=accept&track-"+track_id+"-comment=";
+    } else if (value==2){
+        post_data="track-"+track_id+"-csrf_token="+token+"&track-"+track_id+"-question_67=0&track-"+track_id+"-question_68=1&track-"+track_id+"-contribution_type=__None&track-"+track_id+"-proposed_action=accept&track-"+track_id+"-comment=";
+    } else {
+        post_data="track-"+track_id+"-csrf_token="+token+"&track-"+track_id+"-question_67=0&track-"+track_id+"-question_68=0&track-"+track_id+"-contribution_type=__None&track-"+track_id+"-proposed_action=accept&track-"+track_id+"-comment=";
+    }
+    vote_request.open("POST", query_url, true);
+    vote_request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+    vote_request.send(post_data);
+    console.log("voted");
+} //vote
+
+function check_unloaded_abstracts(){
+    console.log("Check for unloaded abstracts");
+    dataTable = document.getElementById("orals");
+    cells = dataTable.querySelectorAll("tr");
+    for (var irow = 1; irow < cells.length; irow++){
+        if ((cells[irow].cells[vote_column].innerText.indexOf("---")>=0)||(cells[irow].cells[vote_column].innerText.indexOf("???")>=0)){
+            abstract_id= cells[irow].cells[abstract_id_column].childNodes[0].data.trim();
+            console.log("Unloaded abstract: ", abstract_id);
+            abstract_url=abtracts_base_url+abstract_id+"/";
+            update_abstract(abstract_url);    
+        }// if not Loaded
+    } // for each abstract
+} //function check_unloaded_abstracts()
+
+</script>
+</html>

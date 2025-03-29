@@ -5,6 +5,12 @@
 </body>
 
 <script>
+//For colors see https://htmlcolorcodes.com/color-chart/
+
+
+/* 
+This code manages the votes at IPAC using Jacow and indico
+*/
 event_id='95';
 
 
@@ -76,6 +82,7 @@ document.getElementById('loader').innerText = "";
 document.onreadystatechange = function () {
     if (document.readyState == "complete") {
         document.getElementById('loader').innerText = "Loaded";
+        sleep(2000).then(() => { check_unloaded_abstracts() });
         sleep(5000).then(() => { check_unloaded_abstracts() });
         sleep(10000).then(() => { check_unloaded_abstracts() });
         sleep(15000).then(() => { check_unloaded_abstracts() });
@@ -96,6 +103,8 @@ function recreate_abstract_dict(){
 
 function color_abstract(theabstract,thecolor){    
     var irow=abstracts_ids.get(theabstract);
+    dataTable = document.getElementById("orals");
+    cells = dataTable.querySelectorAll("tr");
     //console.log(theabstract,irow);
     //console.log(cells.length);
     //console.log(cells[irow].cells.length);
@@ -181,18 +190,33 @@ function update_abstract(abstract_url){
                         csrf_pos_start=this.responseText.indexOf("value",csrf_pos_start);
                         csrf_pos_end=this.responseText.indexOf(">",csrf_pos_start);
                         csrf_token=this.responseText.substring(csrf_pos_start+7,csrf_pos_end-1);
-                        track_id_start=this.responseText.indexOf("question-list-");
+                        track_id=-1;
+                        track_id_start=this.responseText.indexOf("question-list-XXX");
                         if (track_id_start>0){ 
                             track_id_end=this.responseText.indexOf('"',track_id_start);
                             track_id=this.responseText.substring(track_id_start+14,track_id_end);
                         } else {
-                            track_id=-1;
+                            track_id_start=this.responseText.indexOf("review-group");
+                            if (track_id_start>0){ 
+                                track_id_start=this.responseText.indexOf("/abstracts/reviewing/",track_id_start);
+                                if (track_id_start>0){ 
+                                    track_id_end=this.responseText.indexOf('"',track_id_start);
+                                    track_id=this.responseText.substring(track_id_start+21,track_id_end-1);
+                                }
+                            }
                         }
-                        //console.log("track_id", track_id);
+                        console.log("track_id", track_id);
                         //console.log("csrf_token", csrf_token);
-                        //console.log("review_code", review_code);
-                        //console.log("track_code", track_code);
+                        console.log("review_code", review_code);
+                        console.log("track_code", track_code);
                         btn_txt="<form>";
+                        /*
+                        if (track_id==-1){
+                            btn_txt=btn_txt+"Track ID not found";
+                        } else {
+                            btn_txt=btn_txt+"Track ID: "+track_id;
+                        }
+                        */
                         mc_vote_col=cells[irow].cells[MC_column].innerText.trim();
                         if (priority_vote==1){
                             btn_txt=btn_txt+"<div name='vote' value='1'></div>";
@@ -251,6 +275,7 @@ function update_abstract(abstract_url){
                    else {
                        cells[irow].cells[vote_column].innerHTML="???";
                        console.log("Abtract status:",this.status,this.responseURL) 
+                       cells[irow].cells[vote_column].innerHTML="Error while loading: "+this.status+"</BR>"+"<form><button type=button onClick='update_abstract(\""+this.responseURL+"\")'>Reload</button></form>";
                    }
 
                    sleep(500).then(() => { count_votes(); });
@@ -311,7 +336,7 @@ function count_votes(){
 
 function vote(value,url,review_code,token,track_id){
     console.log("voting",url);
-    color_abstract(url, '#F7DC6F')    ;
+    color_abstract(url, '#F7DC6F');
     var vote_request = new XMLHttpRequest();
     vote_request.onreadystatechange = function() {
         if (this.readyState == 4){
@@ -351,7 +376,7 @@ function check_unloaded_abstracts(){
     dataTable = document.getElementById("orals");
     cells = dataTable.querySelectorAll("tr");
     for (var irow = 1; irow < cells.length; irow++){
-        if ((cells[irow].cells[vote_column].innerText.indexOf("---")>=0)||(cells[irow].cells[vote_column].innerText.indexOf("???")>=0)){
+        if ((cells[irow].cells[vote_column].innerText.indexOf("load")>=0)||(cells[irow].cells[vote_column].innerText.indexOf("---")>=0)||(cells[irow].cells[vote_column].innerText.indexOf("???")>=0)){
             abstract_id= cells[irow].cells[abstract_id_column].childNodes[0].data.trim();
             console.log("Unloaded abstract: ", abstract_id);
             abstract_url=abtracts_base_url+abstract_id+"/";

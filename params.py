@@ -21,11 +21,9 @@ affiliations_file="data/affiliations_file.data"
 #Maximum number of user search queries in a run
 maxUserSearch=200
 
-#Time interval to relaod teh contributions
+#Time interval to relaod the contributions
 reload_contrib_from_online_seconds=5*24*60*60
 
-#Calculated parameters
-event_url="https://indico.jacow.org/event/"+str(event_id)+"/"
 
 
 
@@ -69,6 +67,8 @@ country_for_emails={
     }
 
 
+#Calculated parameters
+event_url="https://indico.jacow.org/event/"+str(event_id)+"/"
 
 #reading secret files
 if not ('api_token' in locals() or 'api_token' in globals()):

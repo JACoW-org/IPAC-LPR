@@ -21,8 +21,14 @@ table.sortable th.no-sort {
   padding-top: 0.35em;
 }
 
-table.sortable th:nth-child(6) {
-  width: 20em;
+table.sortable th:nth-child(0) {
+  width: 1em;
+}
+table.sortable th:nth-child(1) {
+  width: 1em;
+}
+table.sortable th:nth-child(2) {
+  width: 1em;
 }
 
 table.sortable th button {
@@ -278,60 +284,13 @@ window.addEventListener('load', function () {
 %%Title%%
 </h3>
 </center>
-<div class="table-wrap"><table class="sortable">
+<div class="table-wrap"><table class="sortable" id="%%table_id%%">
   <caption> (column headers with buttons are sortable)
     <span class="sr-only"> .</span>
   </caption>
   <thead>
     <tr>
-      <th>
-        <button>
-          First Name
-          <span aria-hidden="true"></span>
-        </button>
-      </th>
-      <th aria-sort="ascending">
-        <button>
-          Last Name
-          <span aria-hidden="false"></span>
-        </button>
-      </th>
-      <th>
-        <button>
-          Affiliation
-          <span aria-hidden="true"></span>
-        </button>
-      </th>
-      <th>
-        <button>
-          Track
-          <span aria-hidden="true"></span>
-        </button>
-      </th>
-      <th>
-        <button>
-          Type
-          <span aria-hidden="true"></span>
-        </button>
-      </th>
-      <th>
-        <button>
-          Title
-          <span aria-hidden="true"></span>
-        </button>
-      </th>
-      <th>
-        <button>
-          Conference
-          <span aria-hidden="true"></span>
-        </button>
-      </th>
-      <th>
-        <button>
-          Contribution ID
-          <span aria-hidden="true"></span>
-        </button>
-      </th>
+    %%col_heads%%
     </tr>
   </thead>
   <tbody>

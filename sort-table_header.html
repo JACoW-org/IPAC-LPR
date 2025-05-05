@@ -21,8 +21,8 @@ table.sortable th.no-sort {
   padding-top: 0.35em;
 }
 
-table.sortable th:nth-child(5) {
-  width: 10em;
+table.sortable th:nth-child(6) {
+  width: 20em;
 }
 
 table.sortable th button {
@@ -273,10 +273,13 @@ window.addEventListener('load', function () {
 
 </script>
 <img SRC="https://www.ipac26.org/wp-content/uploads/2024/12/IPAC2026_rvb.png" width=200>
+<center>
+<h3>
+  Oral presentations at IPAC'23, IPAC'24 and IPAC'25. </h3>
+</center>
 <div class="table-wrap"><table class="sortable">
-  <caption>
-    Oral talks at IPAC'23, IPAC'24 and IPAC'25.
-    <span class="sr-only"> (column headers with buttons are sortable).</span>
+  <caption> (column headers with buttons are sortable)
+    <span class="sr-only"> .</span>
   </caption>
   <thead>
     <tr>
@@ -289,54 +292,45 @@ window.addEventListener('load', function () {
       <th aria-sort="ascending">
         <button>
           Last Name
+          <span aria-hidden="false"></span>
+        </button>
+      </th>
+      <th>
+        <button>
+          Affiliation
           <span aria-hidden="true"></span>
         </button>
       </th>
       <th>
         <button>
-          Company
+          Track
           <span aria-hidden="true"></span>
         </button>
       </th>
-      <th class="no-sort">Address</th>
-      <th class="num">
+      <th>
         <button>
-          Favorite Number
+          Type
+          <span aria-hidden="true"></span>
+        </button>
+      </th>
+      <th>
+        <button>
+          Title
+          <span aria-hidden="true"></span>
+        </button>
+      </th>
+      <th>
+        <button>
+          Conference
+          <span aria-hidden="true"></span>
+        </button>
+      </th>
+      <th>
+        <button>
+          Contribution ID
           <span aria-hidden="true"></span>
         </button>
       </th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>Fred</td>
-      <td>Jackson</td>
-      <td>Canary, Inc.</td>
-      <td>123 Broad St.</td>
-      <td class="num">56</td>
-    </tr>
-    <tr>
-      <td>Sara</td>
-      <td>James</td>
-      <td>Cardinal, Inc.</td>
-      <td>457 First St.</td>
-      <td class="num">7</td>
-    </tr>
-    <tr>
-      <td>Ralph</td>
-      <td>Jefferson</td>
-      <td>Robin, Inc.</td>
-      <td>456 Main St.</td>
-      <td class="num">513</td>
-    </tr>
-    <tr>
-      <td>Nancy</td>
-      <td>Jensen</td>
-      <td>Eagle, Inc.</td>
-      <td>2203 Logan Dr.</td>
-      <td class="num">3.5</td>
-    </tr>
-  </tbody>
-</table></div>
-        
-</html>

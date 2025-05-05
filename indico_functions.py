@@ -84,6 +84,24 @@ def accumulate(value,thedict,subvalue=None):
             thedict[value][subvalue]=0
         thedict[value][subvalue]=thedict[value][subvalue]+1
 
+def comment_abstract(meeting_id,db_id, comment, visibility=None,indico_server="jacow.org",api_token=None):
+    print("Commenting abstract ", db_id)
+    headers = {'Authorization': f'Bearer {api_token}'}
+    payload = { 'text': comment}
+    if visibility is not None:
+        if not visibility in [ "judges" ]:
+            print("Visibility not understood")
+            exit()
+        payload['visibility'] = visibility
+    #print(payload)
+    data = requests.post(f'https://indico.{indico_server}/event/{meeting_id}/abstracts/{db_id}/comment', headers=headers, data=payload)
+
+    #print(data)
+    print("Response "+str(data.status_code))
+    #if not (data.status_code == 200):
+    #    exit()
+
+
 
 def old_update_to_meeting(meeting_id,filename,filetype,indico_server="jacow.org",api_token=None,delete_key=None):
     if api_token is None:

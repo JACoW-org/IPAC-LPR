@@ -11,7 +11,7 @@ Parameters for the IPAC Light Peer Review
 import sys
 
 #Settings
-event_id = 41
+event_id = 95
 
 
 #List of all known users and their affiliation
@@ -30,13 +30,45 @@ event_url="https://indico.jacow.org/event/"+str(event_id)+"/"
 
 
 #regions
-list_countries_EMEA=[ 'CZ', 'LV', 'AM', 'FR', 'ES', 'BE', 'JO', 'IL', 'DE', 'GH', 'RU', 'NL', 'IR', 'RO', 'AT', 'IT', 'TZ', 'PL', 'SE', 'CH']
+list_countries_EMEA=[ 'AM', 'AT', 'BE', 'CH','CZ', 'DE', 'ES', 'FR',  'GB',  'GH', 'IL', 'IR',  'IT', 'JO', 'LV', 
+                     'NL', 'NO', 'PL', 'RO', 'RU', 'TZ',  'SE',  'UK' ]
 EMEA_CODE="EMEA"
-list_countries_Americas=[ 'US', 'BR' ]
+list_countries_Americas=[  'BR' ,'CA', 'US' ]
 AMERICAS_CODE="AMERICAS"
 list_countries_Asia=[ 'JP', 'TH', 'AU', 'CN', 'TW', 'IN', 'KR' ]
 ASIA_CODE="ASIA"
 REGION_UNKNOWN_CODE="Region Unknown"
+
+
+country_for_affiliations={
+    'Science and Technology Facilities Council': { 'code': "UK" , 'name':"United Kingdom"}, 
+    'Cockcroft Institute': { 'code': "UK" , 'name':"United Kingdom"},
+    'DAWONSYS': { 'code': "KR" , 'name':"South Korea"},
+    'Zhongke Fuhai Technology Co. Ltd.' : { 'code': "CN" , 'name':"China"},
+    'Guoli Vacuum' : { 'code': "CN" , 'name':"China"},
+    'Babcock Noell GmbH': { 'code': "DE" , 'name':"Germany"},
+    'University of Milan; Istituto Nazionale di Fisica Nucleare, Laboratori Acceleratori e Superconduttività Applicata': { 'code': "IT" , 'name':"Italy"},
+    'University of California, San Diego': { 'code': "US" , 'name':"United States"},
+    'Michigan State University; Facility for Rare Isotope Beams': { 'code': "US" , 'name':"United States"},
+    'SLAC National Accelerator Laboratory; Hoover Institution': { 'code': "US" , 'name':"United States"},
+    'Argonne National Laboratory': { 'code': "US" , 'name':"United States"},
+    'Japan Proton Accelerator Research Complex; High Energy Accelerator Research Organization': { 'code': "JP" , 'name':"Japan"},
+    'High Energy Accelerator Research Organization; Japan Proton Accelerator Research Complex': { 'code': "JP" , 'name':"Japan"},
+    'Research Center for Accelerator and Radioisotope Science (RARiS), Tohoku University': { 'code': "JP" , 'name':"Japan"},
+    }
+country_for_emails={
+    'ca': { 'code': "CA" , 'name':"Canada"},
+    'ch': { 'code': "CH" , 'name':"Switzerland"},
+    'cn': { 'code': "CN" , 'name':"China"},
+    'de': { 'code': "DE" , 'name':"Germany"},
+    'fr': { 'code': "FR" , 'name':"France"},
+    'it': { 'code': "IT" , 'name':"Italy"},
+    'jp': { 'code': "JP" , 'name':"Japan"},
+    'kr': { 'code': "KR" , 'name':"South Korea"},
+    'uk': { 'code': "UK" , 'name':"United Kingdom"}, 
+    }
+
+
 
 #reading secret files
 if not ('api_token' in locals() or 'api_token' in globals()):

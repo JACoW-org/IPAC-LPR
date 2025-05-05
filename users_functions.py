@@ -8,7 +8,7 @@ User functions for indico/jacow
 @author: delerue
 """
 
-import os
+import os,sys
 import joblib
 from hashlib import md5
 import requests
@@ -39,6 +39,7 @@ rewrite_keys={ 'id': 'db_id' , 'fullName' : 'full_name' , 'email_hash': 'emailHa
 global users
 global affiliations
 global emailHashesDict
+
 
 def load_users():
     global emailHashesDict
@@ -144,7 +145,7 @@ def search_user(email=None,last_name=None,first_name=None,emailHash=None,verbose
     iSearch=iSearch+1
     if iSearch>params.maxUserSearch:
         print("Too many user searches done!!!")
-        exit()
+        sys.exit()
         return None
     else:
         headers = {'Authorization': f'Bearer {api_token}'}
@@ -539,8 +540,60 @@ def get_user_region(country_code):
     if country_code in params.list_countries_Americas:
         return params.AMERICAS_CODE
     if country_code=='':
+        print("Empty country code!")
         return params.REGION_UNKNOWN_CODE
+    print("Unknown country code:",country_code)
     return params.REGION_UNKNOWN_CODE
+
+
+def fix_user_country(user):
+    #print("Fixing user country")
+    if  user['affiliation_link'] is None:
+        user['affiliation_link']={}
+    if user['affiliation'] in params.country_for_affiliations.keys():
+        user['affiliation_link']['country_code']=params.country_for_affiliations[user['affiliation']]['code']
+        user['affiliation_link']['country_name']=params.country_for_affiliations[user['affiliation']]['name']
+    else:
+        country_data=None
+        country_data=get_ROR_country(user['affiliation'])
+        if country_data is not None:
+            user['affiliation_link']['country_code']=country_data[0]
+            user['affiliation_link']['country_name']=country_data[1]        
+        elif user['email'][-2:] in params.country_for_emails:
+            user['affiliation_link']['country_code']=params.country_for_emails[user['email'][-2:]]['code']
+            user['affiliation_link']['country_name']=params.country_for_emails[user['email'][-2:]]['name']
+        else:            
+            print("Unable to fix country affiliation for user",user)
+            print(user['email'],user['email'][-2:])
+    #print(user['affiliation_link']['country_code'])
+    return user
+
+def get_ROR_country(affiliation):
+    print("Calling ROR")
+    encaff='"'+requests.utils.quote(affiliation)+'"'
+    #print(encaff)
+    data = requests.get(f'https://api.ror.org/v2/organizations?query={encaff}')
+    if not data.status_code==200:   
+        print("ROR status code",data.status_code)
+        return None
+    data_json=data.json()
+    if data_json['number_of_results']==0:
+        print("Affiliation ", affiliation,encaff,"returned no result")
+        #exit()
+        return None
+    item_id=0
+    if not data_json['number_of_results']==1:
+        print("ROR number of results ",data_json['number_of_results'])
+        for iid in range(len( data_json['items'])):
+            for affname in data_json['items'][iid]['names']:
+                if affname['value']==affiliation:
+                    item_id=iid
+    affdata=data_json['items'][item_id]
+    if len(affdata['locations'])==0:
+        print("ROR no location")
+        return None
+    return [affdata['locations'][0]['geonames_details']['country_code'] , affdata['locations'][0]['geonames_details']['country_name'] ]
+    
 
 ### Roles management
 
@@ -596,5 +649,22 @@ def has_role_codes(email=None,userid=None,confid=None,only_codes=None):
     else:
         theroles=[  role['code']  for role in member_roles ]
     return list(set(theroles))
+
+def get_SPC_members(confid=None):  
+    if confid is None:
+        return None
+    load_roles(confid=params.event_id)
+    SPC_members=[]
+    for role in roles[params.event_id]['roles']:
+        #print(role['code'])
+        if role['code'] in ['SPC' , 'SPM' , 'SPO' ]:
+            #print("Adding ",role['code'] )
+            for member in role['members']:
+                if member['full_name'] not in SPC_members:
+                    SPC_members.append(member['full_name'])
+    return sorted(SPC_members)
+
+    
+
 
     

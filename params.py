@@ -10,8 +10,21 @@ Parameters for the IPAC Light Peer Review
 
 import sys
 
-#Settings 
+
+### It is advised to override the following parameters in a file called myparams.py
+#Settings
 event_id = 95
+
+email_from_address="peer-review@ipac23.org"
+email_from_txt="IPAC LPR - Nicolas Delerue <"+email_from_address+">"
+email_smtp_server='zrelay.in2p3.fr'
+
+
+### The parameters below are less likely to change but can be changed.
+
+
+#Number of days to review paper
+days_to_review_paper=5
 
 
 #List of all known users and their affiliation
@@ -23,8 +36,6 @@ maxUserSearch=200
 
 #Time interval to relaod the contributions
 reload_contrib_from_online_seconds=5*24*60*60
-
-
 
 
 #regions
@@ -81,4 +92,15 @@ if not ('api_token' in locals() or 'api_token' in globals()):
         print("Unable to read ",fname)
         print("You need to create a file called api_token containing your api_token in the directory above the one where the LPR scripts are located")
         sys.exit(1)
+
+if not ('mail_pwd' in locals() or 'mail_pwd' in globals()):
+    fname="../mailpwd.txt"
+    try:
+        fpwd=open(fname)
+        mail_pwd=fpwd.readlines()[0].strip()
+        fpwd.close()
+        print('mailpwd loaded')
+    except:
+        print("Unable to read ",fname,". You wont't be able to send emails")
+
 

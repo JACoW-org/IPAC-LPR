@@ -75,43 +75,6 @@ if args.overdue:
     jnf.referee_action(args.paper[0],int(args.referee[0]),"overdue")
     exit()
 
-n_papers=0
-print("Check number of paper to reviewer to be done")    
-#[n_referees,same_paper]=jnf.check_referees_for_paper(args.paper[0])
-#print('n_referees',n_referees,'same_paper',same_paper)
-#papers_for_ref=jnf.check_papers_for_referee(int(args.referee[0]))
-#n_papers=papers_for_ref['n_papers']
-#same_referee=""
-#for sr in papers_for_ref['list_papers']:
-#    print('sr',sr)
-#    same_referee=same_referee+sr+"\n"
-    
-
-#ref_line=jnf.referee_data_file_get_line(int(args.referee[0]))
-#print(ref_line)
-#print('len(same_paper)', len(same_paper))
-#if n_referees>0:
-#    print("The same paper already has the following referees",n_referees)
-#    print(same_paper)
-#    for other_ref in same_paper:
-#        if int(other_ref[0])==int(args.referee[0]):
-#            print("This referee is already assigned to this paper!!!")
-#            if not args.assign_only:
-#                exit()
-   
-#if len(same_referee)>1:
-#    print("The same referee already has the following papers",n_papers)
-#    print(same_referee)
-
-#print('can_referee_get_additional_paper(ref_id)',args.referee[0],jnf.can_referee_get_additional_paper(args.referee[0]))
-
-##check that the paper has not been declined
-#[n_declined,list_declined]=jnf.check_paper_for_declined(args.paper[0])
-#for decl in list_declined:
-#    print("This paper ",str(args.paper[0])," was declined by",decl)
-#    if int(decl)==int(args.referee[0]):
-#        print("This referee already declined this paper!")
-#        exit()
 
 #Check that the referee is not one of the authors
 ref_name=ref_dict["full_name"]
@@ -138,24 +101,92 @@ for speak in contrib['persons']:
         print("Referee's name matches one of the authors name. Not assigned.")
         exit()
 
-if args.assign_only:
-    print("Re-assigning referees")
-    print("not implemented")
-    exit()
-#    print([ int(sr[0]) for sr in same_paper])
-#    if not int(args.referee[0]) in [int(sr[0]) for sr in same_paper]:
-#        print("This referees has not yet been assigned to this paper")
-#        print([int(sr[0]) for sr in same_paper])
+
+n_papers=0
+print("Check number of paper to reviewer to be done")    
+
+'''
+print(paper.keys())
+print(paper['can_review'])
+print(contrib.keys())
+print(paper['contribution'].keys())
+print(paper['revisions'][-1].keys())
+print(paper['revisions'][-1]['reviewer_data'])
+print(paper['revisions'][-1]['reviewer_data'].keys())
+'''
+all_assigned_reviewers=[]
+all_current_reviewers=[]
+all_rejected_reviewers=[]
+
+for rev in paper['revisions']:
+    #print(len(rev['timeline']))
+    for tim in rev['timeline']:
+        #print(tim.keys())
+        if 'text'in tim.keys():            
+            if "Assigned reviewer" in tim['text']:
+                revtxt=tim['text'].split(" ")
+                all_assigned_reviewers.append(revtxt[2])
+                all_current_reviewers.append(revtxt[2])
+                #print(tim['text'])
+            elif "Unassigned reviewer" in tim['text']:
+                revtxt=tim['text'].split(" ")
+                pos=99
+                while (pos>=0):
+                    try:
+                        pos=all_current_reviewers.index(revtxt[2])
+                    except:
+                        pos=-1
+                    if pos>=0:
+                        all_current_reviewers.pop(pos)
+                    #print(pos)
+all_current_reviewers=list(set(all_current_reviewers))
+
+has_warning=False
+if referee_db_id in all_current_reviewers:
+    print("*** Warning *** Reviewer is already assigned to this paper.")
+    has_warning=True
+if len(all_current_reviewers)>=2:
+    print("*** Warning *** This paper has already ",len(all_current_reviewers)," reviewers.")
+    has_warning=True
+
+#Checking assignements/unassignements for this paper
+
+
+#[n_referees,same_paper]=jnf.check_referees_for_paper(args.paper[0])
+#print('n_referees',n_referees,'same_paper',same_paper)
+#papers_for_ref=jnf.check_papers_for_referee(int(args.referee[0]))
+#n_papers=papers_for_ref['n_papers']
+#same_referee=""
+#for sr in papers_for_ref['list_papers']:
+#    print('sr',sr)
+#    same_referee=same_referee+sr+"\n"
+    
+
+   
+#if len(same_referee)>1:
+#    print("The same referee already has the following papers",n_papers)
+#    print(same_referee)
+
+#print('can_referee_get_additional_paper(ref_id)',args.referee[0],jnf.can_referee_get_additional_paper(args.referee[0]))
+
+##check that the paper has not been declined
+#[n_declined,list_declined]=jnf.check_paper_for_declined(args.paper[0])
+#for decl in list_declined:
+#    print("This paper ",str(args.paper[0])," was declined by",decl)
+#    if int(decl)==int(args.referee[0]):
+#        print("This referee already declined this paper!")
 #        exit()
+
+
         
-#if not jnf.can_referee_get_additional_paper(args.referee[0]) or n_referees>=2:
-#    if args.override:
-#        print("Overriding paper limitation")
-#    elif args.assign_only:
-#        pass
-#    else:
-#        print("Exiting, use --override to force assignation")
-#        exit()
+
+if has_warning: 
+    if args.override:
+        print("Overridding warnings")
+    else:
+        print("Use --override to override these warnings")
+        sys.exit()
+
 
 #Assign
 #print(contrib['db_id'])

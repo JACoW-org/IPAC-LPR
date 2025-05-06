@@ -2,9 +2,9 @@
 
 # Assign referees to papers
 # Nicolas Delerue, 3/2023
-#Significant update May 2025
+# Significant update May 2025
 
-#import sys
+import sys
 import jacow_nd_func as jnf
 import reviewer_functions as revf
 import email_func as ef 
@@ -32,7 +32,7 @@ parser.add_argument("--overdue", action="store_true", help="Unassigns the refere
 
 args = parser.parse_args()
 
-print("Assigning referee "+args.referee[0]+" to paper "+args.paper[0])
+print("Referee "+args.referee[0]+"; Paper "+args.paper[0])
 
 #Get referee info
 ref_dict=revf.get_reviewer_by_id(args.referee[0])
@@ -48,26 +48,27 @@ print("Reviewer name: ",ref_dict["full_name"])
 #print(revlist)
 if referee_db_id not in revf.get_reviewer_list():
     print("Reviewer is not in the reviewer list!!!")
-    print("You must add it...")
+    print(f"You must add him or her in the team of content_reviewers at https://indico.jacow.org/event/{params.event_id}/manage/papers/")
     
 
 
 #Get contribution info
 contrib=pf.get_contrib_info(args.paper[0])
+if 'db_id' not in contrib.keys():
+    contrib['db_id']=contrib['id']
 
 if contrib is None:
     print("Contrib ",args.paper[0]," seems not to exist!!! get_contrib_info returned None")
-    exit()
+    sys.exit()
 else:
-    print("Paper ",args.paper[0]," is not None")
+    pass
+    #print("Paper ",args.paper[0]," is not None")
 
 
 if args.unassign:
-    print("Unassign not yet implemented")
-    exit()
     revf.unassign_reviewer(contrib['db_id'],int(args.referee[0]))
-    print("unassigned")
-    exit()
+    print("Unassigned")
+    sys.exit()
 
 if args.overdue:
     print("Overdue not yet implemented")
@@ -119,8 +120,6 @@ print('Contribution title:',contrib['title'])
 #print('Contribution desc:',contrib['description'])
 #print('contrib',contrib['id'])
 #print('contrib',contrib['persons'])
-if 'db_id' not in contrib.keys():
-    contrib['db_id']=contrib['id']
 paper=pf.get_paper_info(contrib['db_id'])
 
 if paper is None:

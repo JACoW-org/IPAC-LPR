@@ -50,7 +50,7 @@ def get_paper_contrib_info(db_id,event_id=None,use_cache=False,file_age_to_renew
         elif filetype=='contrib':
             url=f'https://indico.jacow.org/event/{event_id}/contributions/{db_id}.json'       
         data = requests.get(url, headers=headers)
-        print('accessing url ',url)
+        #print('accessing url ',url)
         if data.status_code == 200:
             fdata=open(filename,"w")
             json.dump(data.json(),fdata)

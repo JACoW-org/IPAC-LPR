@@ -16,7 +16,7 @@ step and a "mailpwd.txt" with the password to send emails (do not put these info
 
 1. Identify the indico code of the previous conferences from the same series (example: IPAC 23 was at https://indico.jacow.org/event/41/ so its code is 41;  IPAC24=63; IPAC25=81)
 
-1. Adapt the file params.py with the parameters of your conference
+1. Adapt the file params.py with the parameters of your conference. To avoid overwriting this file each time you do a git pull you can also create a file "myparams.py" either in the same directory or the direction above and put the customized variables here.
 
 1. Create the map of referees by running:
     ./map_authors_to_MC.py --confid 41,63 

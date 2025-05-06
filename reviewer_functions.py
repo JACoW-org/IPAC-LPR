@@ -116,6 +116,7 @@ def unassign_reviewer(paper_db_id,reviewer_db_id):
     print(data)
     indf.comment_paper(paper_db_id, "Unassigned reviewer "+str(reviewer_db_id), visibility="judges",api_token=params.api_token,meeting_id=params.event_id)
     if not (data.status_code == 200):
+        print("Error code= ", data.status_code)
         exit()
     #print("Check paper ", paper_id ," for reviewer unassigned")
 

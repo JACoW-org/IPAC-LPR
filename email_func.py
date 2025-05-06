@@ -9,7 +9,10 @@ import traceback
 # Import the email modules we'll need
 from email.mime.text import MIMEText
 
-import jacow_nd_func as jnf
+# Import the email modules we'll need
+from email.message import EmailMessage
+
+#import jacow_nd_func as jnf
 
 import params
 
@@ -40,44 +43,44 @@ def email_file(recipients,filename,replace_dict=None,show_message=False,send_me_
 def email_txt(recipients,string_txt,show_message=False,send_me_a_copy=True):
     send_msg=True
     title=string_txt.split("\n")[0]
-    msg=string_txt[len(title)+1:]
+    msgtxt=string_txt[len(title)+1:]
     
     print("Title")
     print(title)
     if show_message:
         print("Message")
-        print(msg)
-    
-    msg = MIMEText(msg,_charset='utf-8')
-
-
-    message_recipients = recipients
-
-    #print("title",title)
-    #print('message_recipient:',message_recipient)
-    #print("---")
-    #print("msg", msg)
+        print(msgtxt)
         
-    if not send_msg:
-        print("Testing, not sending!")
-        exit()
+    msg = EmailMessage()
+    msg.set_content(msgtxt)
+    
+    #message_recipients = recipients
+        
     # me == the sender's email address
     # you == the recipient's email address
     msg['Subject'] = title
     msg['From'] =  params.email_from_txt
     msg['To'] = recipients
+    if show_message:
+        print(msg.as_string())
+    if not send_msg:
+        print("Testing, not sending!")
+        exit()
 
     # Send the message via our own SMTP server, but don't include the
     # envelope header.
     try:
         smtp_serv = smtplib.SMTP_SSL(params.email_smtp_server)
-        smtp_serv.login(params.email_from_address,params.mail_pwd)
+        smtp_serv.login(params.smtp_login,params.mail_pwd)
     except:
         print("Unable to connect to server ",params.email_smtp_server," with login ", params.email_from_address)
         print(traceback.format_exc())
         sys.exit(-1)
         
-    recips=recipients.split(",")
+    if "," in recipients:
+        recips=recipients.split(",")
+    else:
+        recips = recipients
     print("Sending email to ", recips)
     if send_me_a_copy:
         recips.append(params.email_from_address)
@@ -87,7 +90,7 @@ def email_txt(recipients,string_txt,show_message=False,send_me_a_copy=True):
         else:
             the_recip = recip.strip()
         try:
-            smtp_serv.sendmail(params.email_from_address, [the_recip], msg.as_string())
+            smtp_serv.sendmail(params.email_from_address, the_recip, msg.as_string())
         except:
             print("Sending to ", the_recip, " failed ")
             print(traceback.format_exc())

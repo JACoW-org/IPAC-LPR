@@ -16,9 +16,10 @@ import sys
 event_id = 95
 
 email_from_address="peer-review@ipac23.org"
+#email_from_address="nicolas.delerue@ijclab.in2p3.fr"
 email_from_txt="IPAC LPR - Nicolas Delerue <"+email_from_address+">"
 email_smtp_server='zrelay.in2p3.fr'
-
+smtp_login="nicolas.delerue@ijclab.in2p3.fr"
 
 ### The parameters below are less likely to change but can be changed.
 

@@ -12,7 +12,7 @@ import params
 import email_func as ef 
 
 recipients=[ params.email_from_address ]
-string_txt="Test email for LPR\nHello,\n this is a test email.\nIf you receive this email  it means that you are correctly configured.\nBye"
+string_txt="Test email for LPR\nHello,\nThis is a test email.\nIf you receive this email it means that you are correctly configured.\nBye"
 ef.email_txt(recipients,string_txt,show_message=True,send_me_a_copy=True)
 print("Sending email done")
 

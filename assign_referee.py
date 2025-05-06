@@ -8,12 +8,15 @@
 import jacow_nd_func as jnf
 import reviewer_functions as revf
 import email_func as ef 
+import papers_functions as pf
 import argparse
-import openpyxl
+#import openpyxl
 import datetime
-import urllib.parse
-import requests
+#import urllib.parse
+#import requests
 import params
+
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--paper',  '-p', nargs=1, help="The paper to which the referee should be assigned", required=True)
@@ -21,10 +24,10 @@ parser.add_argument("--referee", '-r',  nargs=1, help="The referee id to be assi
 parser.add_argument("--override", action="store_true", help="Override limits on paper per referee or referees per paper")
 parser.add_argument("--no-email", action="store_true", help="Does not send email")
 parser.add_argument("--assign-only", action="store_true", help="Assign but does not send email")
-#parser.add_argument("--unassign", action="store_true", help="Unassigns the referee from the paper")
-#parser.add_argument("--overdue", action="store_true", help="Unassigns the referee from the paper and records him as unavailable")
+parser.add_argument("--unassign", action="store_true", help="Unassigns the referee from the paper")
+parser.add_argument("--overdue", action="store_true", help="Unassigns the referee from the paper and records him as unavailable")
 
-parser.parse_args()
+#parser.parse_args()
 
 
 args = parser.parse_args()
@@ -32,19 +35,32 @@ args = parser.parse_args()
 print("Assigning referee "+args.referee[0]+" to paper "+args.paper[0])
 
 #Get referee info
-ref_dict=revf.get_referee_by_id(int(args.referee[0]))
+ref_dict=revf.get_reviewer_by_id(args.referee[0])
+
 
 if ref_dict is None:
-    print("ref_dict is None for ",int(args.referee[0]))
+    print("ref_dict is None for ",args.referee[0])
     exit()
-referee_db_id=int(args.referee[0])
+referee_db_id=args.referee[0]
+print("Reviewer name: ",ref_dict["full_name"])
 
-print("To be done: check that reviewer is in the pool")
-exit()
+#revlist=revf.get_reviewer_list()
+#print(revlist)
+if referee_db_id not in revf.get_reviewer_list():
+    print("Reviewer is not in the reviewer list!!!")
+    print("You must add it...")
+    
 
 
 #Get contribution info
-contrib=jnf.find_contrib(the_id=args.paper[0])
+contrib=pf.get_contrib_info(args.paper[0])
+
+if contrib is None:
+    print("Contrib ",args.paper[0]," seems not to exist!!! get_contrib_info returned None")
+    exit()
+else:
+    print("Paper ",args.paper[0]," is not None")
+
 
 if args.unassign:
     print("Unassign not yet implemented")
@@ -98,19 +114,30 @@ print("Check number of paper to reviewer to be done")
 
 #Check that the referee is not one of the authors
 ref_name=ref_dict["full_name"]
-print("Referee name is", ref_name)
-paper=jnf.get_paper_info(contrib['db_id'])
+#print('contrib',contrib.keys())
+print('Contribution title:',contrib['title'])
+#print('Contribution desc:',contrib['description'])
+#print('contrib',contrib['id'])
+#print('contrib',contrib['persons'])
+if 'db_id' not in contrib.keys():
+    contrib['db_id']=contrib['id']
+paper=pf.get_paper_info(contrib['db_id'])
+
 if paper is None:
     print("Paper ",args.paper[0]," seems not to exist!!! get_paper_info returned None")
     exit()
 else:
     print("Paper ",args.paper[0]," is not None")
-for type in [ 'speakers' , 'primaryauthors' , 'coauthors']:
-    for speak in contrib[type]:
-        if ref_name.lower() == (speak['first_name'].lower()+" "+speak['last_name'].lower()):
-            print(type,speak['fullName'],speak['first_name'],speak['last_name'],speak['affiliation'])
-            print("Referee's name matches one of the authors name. Not assigned.")
-            exit()
+#print(paper.keys())
+#print(paper['revisions'][0].keys())
+print("Paper title", paper['contribution']['title'])
+#print(contrib['persons'])
+for speak in contrib['persons']:
+    #print(speak.keys())
+    if 'full_name' in speak.keys() and ref_name.lower() == speak['full_name'].lower() or 'fullName' in speak.keys() and ref_name.lower() == speak['fullName'].lower():
+        print(type,speak['fullName'],speak['first_name'],speak['last_name'],speak['affiliation'])
+        print("Referee's name matches one of the authors name. Not assigned.")
+        exit()
 
 if args.assign_only:
     print("Re-assigning referees")
@@ -140,11 +167,21 @@ print("assigned")
 if not args.assign_only:
     the_deadline=(datetime.datetime.today()+ datetime.timedelta(days=params.days_to_review_paper)).strftime("%d/%m/%Y")
     
+    replace_dict={}
+    replace_dict["name"]=ref_dict["full_name"]
+    replace_dict["title"]=contrib['title']
+    replace_dict["paper_id"]=contrib['db_id']
+    replace_dict["id"]=contrib['db_id']
+    replace_dict["url_paper"]=f'https://indico.jacow.org/event/{params.event_id}/papers/'+str(contrib['db_id'])
+    replace_dict["abstract"]=contrib['description']
+    replace_dict["deadline"]=the_deadline
+
+    
     if args.no_email:
         print('Requested not to send emails')
     else:
         if n_papers==0:
-            ef.send_email(referee_id=args.referee[0],paper_id=args.paper[0],url=urlform,msgfile='message_referee_request_v2.txt',deadline=the_deadline)
+            ef.email_file(ref_dict["email"],"messages/message_referee_request.txt",replace_dict=replace_dict,show_message=True,send_me_a_copy=True)
         else:
-            ef.send_email(referee_id=args.referee[0],paper_id=args.paper[0],url=urlform,msgfile='message_referee_additional_request.txt',deadline=the_deadline)
+            ef.email_file(ref_dict["email"],"messages/message_referee_additional_request.txt",replace_dict=replace_dict,show_message=True,send_me_a_copy=True)
             

@@ -23,7 +23,7 @@ def get_contrib_info(db_id,event_id=None,use_cache=False,file_age_to_renew=24*60
 
 def get_paper_contrib_info(db_id,event_id=None,use_cache=False,file_age_to_renew=24*60*60,sleep_before_online=0.5,filetype='paper'):
     if event_id is None:
-        conf_id=params.event_id
+        event_id=params.event_id
     filename="papers/"+filetype+"_"+str(db_id)+".json"
     use_online=True
     if use_cache:
@@ -50,7 +50,7 @@ def get_paper_contrib_info(db_id,event_id=None,use_cache=False,file_age_to_renew
         elif filetype=='contrib':
             url=f'https://indico.jacow.org/event/{event_id}/contributions/{db_id}.json'       
         data = requests.get(url, headers=headers)
-        #print('accessing url ',url)
+        print('accessing url ',url)
         if data.status_code == 200:
             fdata=open(filename,"w")
             json.dump(data.json(),fdata)

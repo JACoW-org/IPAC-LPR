@@ -80,6 +80,10 @@ def email_txt(recipients,string_txt,show_message=False,send_me_a_copy=True):
     if "," in recipients:
         recips=recipients.split(",")
     else:
+        if  isinstance(recipients, str):  
+            recipients=[ recipients ]
+        elif not isinstance(recipients, list):  
+            recipients=list(recipients)
         recips = recipients
     print("Sending email to ", recips)
     if send_me_a_copy:

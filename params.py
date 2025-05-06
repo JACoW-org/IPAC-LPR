@@ -106,7 +106,7 @@ if not ('mail_pwd' in locals() or 'mail_pwd' in globals()):
         fpwd=open(fname)
         mail_pwd=fpwd.readlines()[0].strip()
         fpwd.close()
-        print('mailpwd loaded')
+        #print('mail_pwd loaded')
     except:
         print("Unable to read ",fname,". You wont't be able to send emails")
 

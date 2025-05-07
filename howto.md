@@ -46,3 +46,11 @@ If a reviewer is unavailable, you can unassign him from a paper with the command
     ./assign_referee.py --paper 149 --referee 877 --unassign
 
 
+### How to generate the reviewers report for paper 8xxx?
+Type:
+    ./extract_paper_evaluation_report.py -p 8xxx --hide-reviewers --export
+
+The --hide-reviewers will hide reviewer information.
+The --export will save the report in a file called report_8xxx.txt
+
+
